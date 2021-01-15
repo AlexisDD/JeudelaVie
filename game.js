@@ -13,3 +13,10 @@ for (var x = 0; x < gridLength; x += 1) {
     }
 }
 ctx.stroke();
+
+
+c.addEventListener('click', function(event) {
+    var x = Math.floor(event.offsetX / cellSize);
+    var y = Math.floor(event.offsetY / cellSize);
+    alert("X:"+x+" Y: "+ y);
+ }, false);
