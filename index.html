@@ -7,6 +7,21 @@
 </head>
 <body>
     <h1>Jeu de la vie</h1>
-    <canvas id="grille" width="600" height="600">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
+    <div class="game-container">
+        <canvas id="grille" width="600" height="600">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
+
+        <div class="data-container">
+            <fieldset>
+                <legend>Statistiques</legend>
+                <label for="iterations">Nombre d'itérations :</label>
+                <output id="iterations">0</output>
+                <label for="alive">Cellules en vie :</label>
+                <output id="alive">0</output>
+            </fieldset>
+            <fieldset>
+                <legend>Paramètres</legend>
+            </fieldset>
+        </div>
+    </div>
     <script type="text/javascript" src="game.js"> </script>
 </body>

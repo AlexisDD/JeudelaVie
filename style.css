@@ -7,10 +7,32 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.game-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(100px, auto);
+    margin-top: 50px;
+}
+
+.data-container {
+    margin: auto 60px;
+}
+
 #grille {
-    display: block;
-    margin: 50px auto;
-    margin-left: auto;
-    margin-right: auto;
     outline: black 2px solid;
+    margin: auto;
+}
+
+fieldset {
+    margin: 20px;
+    padding: 15px;
+}
+
+fieldset > output {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    display: block;
 }

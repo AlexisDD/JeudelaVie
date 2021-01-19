@@ -1,4 +1,3 @@
-// test
 var gridSize = 600;
 var cellSize = 20;
 
@@ -19,5 +18,5 @@ ctx.stroke();
 c.addEventListener('click', function(event) {
     var x = Math.floor(event.offsetX / cellSize);
     var y = Math.floor(event.offsetY / cellSize);
-    alert("X:"+x+" Y: "+ y);
+    console.log("X:"+x+" Y: "+ y);
  }, false);
