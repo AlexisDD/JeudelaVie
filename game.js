@@ -1,6 +1,7 @@
 var width = 600;
 var height = 700;
 var cellSize = 20;
+var isActive = false;
 
 var gridLength = width / cellSize;
 var gridHeight = height / cellSize;

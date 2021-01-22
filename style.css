@@ -28,3 +28,14 @@ fieldset {
     padding: 15px;
 }
 
+#controls {
+    margin: 20px auto;
+}
+
+#controls > button {
+    padding: 0;
+    border: none;
+    background: none;
+    outline: none;
+    margin: 0 10px;
+}
