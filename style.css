@@ -28,11 +28,3 @@ fieldset {
     padding: 15px;
 }
 
-fieldset > output {
-    display: block;
-    margin-bottom: 10px;
-}
-
-input {
-    display: block;
-}
