@@ -23,9 +23,14 @@
                 <label for="taille_grille">Taille de la grille :</label> <br>
                 <input type="range" id="taille_grille" value="600" min="100" max="1000" oninput="taille_output.value = this.value">
                 <output id="taille_output">600</output> <br>
+
                 <label for="vitesse">Vitesse :</label> <br>
                 <input type="range" id="vitesse" value="1" min="0" max="2" step="0.1" oninput="vitesse_output.value = this.value">
-                <output id="vitesse_output">1</output>
+                <output id="vitesse_output">1</output> <br>
+
+                <label for="taux_remplissage">Taux de remplissage (uniquement en mode aléatoire):</label> <br>
+                <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value+'%'">
+                <output id="taux_remplissage_output">30%</output>
             </fieldset>
         </div>
         <div id="controls">

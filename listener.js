@@ -8,5 +8,5 @@ function playPause(button){
 }
 
 function random(button){    
-    init_grid(parseInt(taux_remplissage.value)/100);
+    randomFill(parseInt(taux_remplissage.value)/100);
 }
