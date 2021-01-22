@@ -7,6 +7,6 @@ function playPause(button){
     }
 }
 
-function random(button){
-    console.log("random")
+function random(button){    
+    init_grid(parseInt(taux_remplissage.value)/100);
 }
