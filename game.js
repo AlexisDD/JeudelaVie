@@ -8,6 +8,9 @@ var gridHeight = height / cellSize;
 
 var c = document.getElementById("grille");
 var tauxRemplissage = document.getElementById("taux_remplissage");
+var vitesse = document.getElementById("vitesse");
+var button_play = document.getElementById("button_play");
+
 var ctx = c.getContext("2d");
 var grid = new Array(gridLength);
 
@@ -16,7 +19,24 @@ c.height=height;
 
 initGrid();
 
+/////////////////////////////////////////////
+
+// Demander à l'utilisateur de mettre en pause
+// avant qu'il ne clique sur une case
+
+////////////////////////////////////////////
+
+
 c.addEventListener('click', function(event) {
+    if (isActive){
+        playPause(button_play);
+        setTimeout(function(){ ajout_manuel(event); }, timeout);
+    }else{
+        ajout_manuel(event);
+    }
+}, false);
+
+function ajout_manuel(event){
     var x = Math.floor(event.offsetX / cellSize);
     var y = Math.floor(event.offsetY / cellSize);
     console.log("X:"+x+" Y: "+ y);
@@ -26,18 +46,23 @@ c.addEventListener('click', function(event) {
     else
         grid[x][y].statut=1;
     console.log(grid[x][y]);
- }, false);
+}
 
-
- function initGrid(){
+function initGrid(){
     ctx.beginPath();
-    for (var x = 0; x < gridLength; x += 1)
-        for (var y = 0; y < gridHeight; y += 1)
-            ctx.rect(x * cellSize, y*cellSize, cellSize, cellSize);
+    for (var x = 0; x < gridLength; x += 1){        
+        grid[x] = new Array(gridHeight); 
+        for (var y = 0; y < gridHeight; y += 1){
+            ctx.rect(x * cellSize, y*cellSize, cellSize, cellSize);            
+            grid[x][y]=new Cellule(x,y,0);
+        }
+    }
     ctx.stroke();
  }
 
- function randomFill(alea=0){
+function randomFill(alea){
+    if (typeof alea == 'undefined')
+        alea=0;
     for (var x = 0; x < gridLength; x += 1) {
         grid[x] = new Array(gridHeight); 
         for (var y = 0; y < gridHeight; y += 1) {
@@ -49,63 +74,84 @@ c.addEventListener('click', function(event) {
     }
 }
 
+function nb_cells_autour(x,y){
+    // fonction qui renvoie le nombre de voisins vivants d'une cellule
+    // fonction à revoir pour le système de carré dont les côtés se rejoignent
+    nb=0;
+    if (y-1>=0){
+		if (grid[x][y-1].statut!=0)
+			nb+=1;
+	}
+    if (y+1<gridHeight){
+		if (grid[x][y+1].statut!=0)
+			nb+=1;
+	}
+    if (x-1>=0){
+		if (grid[x-1][y].statut!=0)
+			nb+=1;
+	}
+    if (x+1<gridLength){
+		if (grid[x+1][y].statut!=0)
+			nb+=1;
+	}
+    if (x-1>=0 && y-1>=0){
+		if (grid[x-1][y-1].statut!=0)
+			nb+=1;
+	}
+    if (x-1>=0 && y+1<gridHeight){
+		if (grid[x-1][y+1].statut!=0)
+			nb+=1;
+	}
+    if (x+1<gridLength && y-1>=0){
+		if (grid[x+1][y-1].statut!=0)
+			nb+=1;
+	}
+    if (x+1<gridLength && y+1<gridHeight){
+		if (grid[x+1][y+1].statut!=0)
+			nb+=1;
+	}
+    return nb;
+}
 
+function game(){
+    // la fonction de mise à jour de la grille avec les règles
+    grid_next = new Array(gridLength);
+	for (i = 0; i < gridLength; i++){
+		grid_next[i] = new Array(gridHeight);
+	}		
 
- class Cellule {
-     /** Pour définir une nouvelle cellule : 
-      * const cellule = new Cellule(statut) avec statut = 1/0 ou true/false.
-      **/
-    constructor(x,y,statut) {
-        this._tempsVie = 0;
-        this._x = x;
-        this._y = y;        
-        this.statut = statut;
-    }
-  
-    get statut() {
-        return this._statut;
-    }
-  
-    set statut(value) {
-        if(value == 1)
-            this.augmenterTempsVie();
-        else
-            this._tempsVie = 0;
-        this._statut = value;
-        this.dessiner();
-    }
-
-    get tempsVie() {
-        return this._tempsVie;
-    }
-
-    set tempsVie(value){
-        this._tempsVie = value;
-    }
-
-    augmenterTempsVie(){
-        this._tempsVie++;
-    }
-
-    dessiner() {
-        ctx.beginPath();
-        ctx.clearRect(this._x * cellSize, this._y*cellSize, cellSize, cellSize);
-        if (this._statut!=0){
-           /*        
-            if (this._tempsVie==1)                
-                ctx.fillStyle = 'rgba(190, 190, 190)';            
-            else if (this._tempsVie==2)                
-            ctx.fillStyle = 'rgba(133, 1333, 133)'; 
-            else if (this._tempsVie==3)                
-                ctx.fillStyle = 'rgba(79, 79, 79)'; 
-            else               */
-            ctx.fillStyle = 'rgba(0, 0, 0, ' + this._tempsVie / 4 + ')'; 
-
-            ctx.rect(this._x * cellSize, this._y*cellSize, cellSize, cellSize); 
-         } else {
-            ctx.strokeRect(this._x * cellSize, this._y*cellSize, cellSize, cellSize);
+    for (x = 0; x < gridLength; x++){
+		for (y = 0; y < gridHeight; y++){
+			nb = nb_cells_autour(x,y);
+            if (nb==3){
+                grid_next[x][y]=1    // rule 1
+            }else if (nb==2)
+                grid_next[x][y]=2    // rule 2
+			else if (nb < 2 || nb > 3)
+                grid_next[x][y]=3;  // rule 3
         }
-        ctx.stroke();
-        ctx.fill();
     }
-  }
+    for (x = 0; x < gridLength; x++){
+        for (y = 0; y < gridHeight; y++){
+            nb = nb_cells_autour(x,y);
+            if (grid_next[x][y]==1)
+                grid[x][y].statut=1; // rule 1
+            else if (grid_next[x][y]==2)
+                grid[x][y].augmenterTempsVie(); // rule 2
+            else if (grid_next[x][y]==3)
+                grid[x][y].statut=0;  // rule 3
+        }
+    }
+    if (isActive){
+        temps=vitesse.value;
+        console.log(temps);
+        if (temps!=0){
+            if (temps<=1)
+                timeout=1000/temps; // A Vitesse x0.1 : 10 secondes
+            else // A Vitesse x1 : 1 seconde
+                timeout=1000/(temps**(4.3));   // A Vitesse x2 : 50 ms
+            setTimeout(game, timeout); // A Vitesse x0.1 : 10 secondes
+        }
+    }
+}
+

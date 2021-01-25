@@ -1,7 +1,8 @@
 function playPause(button){
     isActive = !isActive
     if(isActive){
-        button.children[0].src = "images/pause.png"
+        button.children[0].src = "images/pause.png"        
+        game()
     } else {
         button.children[0].src = "images/play.png"
     }
