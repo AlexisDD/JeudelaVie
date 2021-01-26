@@ -9,7 +9,9 @@ var gridHeight = height / cellSize;
 var c = document.getElementById("grille");
 var tauxRemplissage = document.getElementById("taux_remplissage");
 var vitesse = document.getElementById("vitesse");
-var button_play = document.getElementById("button_play");
+var buttonPlay = document.getElementById("button_play");
+
+var delay = 1;
 
 var ctx = c.getContext("2d");
 var grid = new Array(gridLength);
@@ -29,23 +31,21 @@ initGrid();
 
 c.addEventListener('click', function(event) {
     if (isActive){
-        playPause(button_play);
-        setTimeout(function(){ ajout_manuel(event); }, timeout);
+        playPause(buttonPlay);
+        setTimeout(function(){ ajoutManuel(event); }, delay);
     }else{
-        ajout_manuel(event);
+        ajoutManuel(event);
     }
 }, false);
 
-function ajout_manuel(event){
+function ajoutManuel(event){
     var x = Math.floor(event.offsetX / cellSize);
     var y = Math.floor(event.offsetY / cellSize);
-    console.log("X:"+x+" Y: "+ y);
-    console.log(grid[x][y]);
-    if (grid[x][y].statut==1)
-        grid[x][y].statut=0;
+    const cellule = grid[x][y];
+    if (cellule.statut==1)
+        cellule.statut=0;
     else
-        grid[x][y].statut=1;
-    console.log(grid[x][y]);
+        cellule.statut=1;
 }
 
 function initGrid(){
@@ -74,83 +74,55 @@ function randomFill(alea){
     }
 }
 
-function nb_cells_autour(x,y){
+function nbCellulesAutour(x,y){
     // fonction qui renvoie le nombre de voisins vivants d'une cellule
     // fonction à revoir pour le système de carré dont les côtés se rejoignent
-    nb=0;
-    if (y-1>=0){
-		if (grid[x][y-1].statut!=0)
-			nb+=1;
-	}
-    if (y+1<gridHeight){
-		if (grid[x][y+1].statut!=0)
-			nb+=1;
-	}
-    if (x-1>=0){
-		if (grid[x-1][y].statut!=0)
-			nb+=1;
-	}
-    if (x+1<gridLength){
-		if (grid[x+1][y].statut!=0)
-			nb+=1;
-	}
-    if (x-1>=0 && y-1>=0){
-		if (grid[x-1][y-1].statut!=0)
-			nb+=1;
-	}
-    if (x-1>=0 && y+1<gridHeight){
-		if (grid[x-1][y+1].statut!=0)
-			nb+=1;
-	}
-    if (x+1<gridLength && y-1>=0){
-		if (grid[x+1][y-1].statut!=0)
-			nb+=1;
-	}
-    if (x+1<gridLength && y+1<gridHeight){
-		if (grid[x+1][y+1].statut!=0)
-			nb+=1;
-	}
-    return nb;
+    nbVivantProche = 0;
+    for (let posX = x-1; posX < x+2; posX++) {
+        for (let posY = y-1; posY < y+2; posY++){
+            if ((posX == x && posY == y) 
+            || !(0 <= posY && posY < gridHeight)
+            || !(0 <= posX && posX < gridLength))
+                continue
+            if (grid[posX][posY].statut == 1)
+                nbVivantProche += 1
+        }
+    }
+    return nbVivantProche;
 }
 
 function game(){
     // la fonction de mise à jour de la grille avec les règles
-    grid_next = new Array(gridLength);
-	for (i = 0; i < gridLength; i++){
-		grid_next[i] = new Array(gridHeight);
-	}		
+    const statut_next = grid.map(array => array.map(cellule => cellule.statut));
 
     for (x = 0; x < gridLength; x++){
 		for (y = 0; y < gridHeight; y++){
-			nb = nb_cells_autour(x,y);
-            if (nb==3){
-                grid_next[x][y]=1    // rule 1
-            }else if (nb==2)
-                grid_next[x][y]=2    // rule 2
-			else if (nb < 2 || nb > 3)
-                grid_next[x][y]=3;  // rule 3
+            nb = nbCellulesAutour(x,y);
+            //règle 2 ignorée car pas de changement de statut
+            if (nb == 3){
+                statut_next[x][y]=1;
+            } else if (nb < 2 || nb > 3) {
+                statut_next[x][y]=0;
+            }
         }
     }
-    for (x = 0; x < gridLength; x++){
-        for (y = 0; y < gridHeight; y++){
-            nb = nb_cells_autour(x,y);
-            if (grid_next[x][y]==1)
-                grid[x][y].statut=1; // rule 1
-            else if (grid_next[x][y]==2)
-                grid[x][y].augmenterTempsVie(); // rule 2
-            else if (grid_next[x][y]==3)
-                grid[x][y].statut=0;  // rule 3
-        }
-    }
+
+    statut_next.forEach(function (array, x) {
+        array.forEach(function(statut, y){
+            grid[x][y].statut = statut;
+        });
+    });
+
     if (isActive){
         temps=vitesse.value;
-        console.log(temps);
         if (temps!=0){
             if (temps<=1)
-                timeout=1000/temps; // A Vitesse x0.1 : 10 secondes
+                delay=1000/temps; // A Vitesse x0.1 : 10 secondes
             else // A Vitesse x1 : 1 seconde
-                timeout=1000/(temps**(4.3));   // A Vitesse x2 : 50 ms
-            setTimeout(game, timeout); // A Vitesse x0.1 : 10 secondes
+                delay=1000/(temps**(4.3));   // A Vitesse x2 : 50 ms
+            setTimeout(game, delay); // A Vitesse x0.1 : 10 secondes
+        } else {
+            playPause(buttonPlay);
         }
     }
 }
