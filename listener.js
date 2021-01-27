@@ -1,3 +1,6 @@
+var iterationsOutput = document.getElementById("iterations");
+var cellulesVivantesOutput = document.getElementById("alive");
+
 function playPause(button){
     isActive = !isActive
     if(isActive){
@@ -9,5 +12,10 @@ function playPause(button){
 }
 
 function random(button){    
-    randomFill(parseInt(taux_remplissage.value)/100);
+    randomFill(parseInt(tauxRemplissage.value)/100);
+}
+
+function updateStats(){
+    iterationsOutput.value = nbIterations;
+    cellulesVivantesOutput.value = nbCellulesVivantes;
 }
