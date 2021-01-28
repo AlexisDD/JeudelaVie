@@ -9,7 +9,6 @@ var gridHeight = height / cellSize;
 var c = document.getElementById("grille");
 var tauxRemplissage = document.getElementById("taux_remplissage");
 var vitesse = document.getElementById("vitesse");
-var buttonPlay = document.getElementById("button_play");
 
 var delay = 1;
 var timer;
@@ -34,7 +33,7 @@ initGrid();
 
 c.addEventListener('click', function(event) {
     if (isActive){
-        playPause(buttonPlay);
+        playPause();
         clearTimeout(timer);
     }        
     ajoutManuel(event);
@@ -44,10 +43,14 @@ function ajoutManuel(event){
     var x = Math.floor(event.offsetX / cellSize);
     var y = Math.floor(event.offsetY / cellSize);
     const cellule = grid[x][y];
-    if (cellule.statut==1)
+    if (cellule.statut==1){
         cellule.statut=0;
-    else
+        nbCellulesVivantes--;
+    } else {
         cellule.statut=1;
+        nbCellulesVivantes++;
+    }
+    updateStats();
 }
 
 function initGrid(){
@@ -133,7 +136,7 @@ function game(){
                 delay=1000/(temps**(4.3));   // A Vitesse x2 : 50 ms
             timer = setTimeout(game, delay); // A Vitesse x0.1 : 10 secondes
         } else {
-            playPause(buttonPlay);
+            playPause();
         }
     }
 }

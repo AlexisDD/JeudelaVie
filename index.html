@@ -11,12 +11,14 @@
         <canvas id="grille">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
 
         <div class="data-container">
-            <fieldset>
+            <fieldset id="statistiques">
                 <legend>Statistiques</legend>
                 <label for="iterations">Nombre d'itérations :</label><br>
                 <output id="iterations">0</output> <br>
                 <label for="alive">Cellules en vie :</label> <br>
                 <output id="alive">0</output> <br>
+                <label for="temps_iteration">Temps par itération :</label> <br>
+                <output id="temps_iteration">1 seconde</output> <br>
             </fieldset>
             <fieldset>
                 <legend>Paramètres</legend>                
@@ -34,13 +36,15 @@
             </fieldset>
         </div>
         <div id="controls">
-            <button id="button_play" title="Démarrer/Arrêter" onclick="playPause(this);">
-                <img alt="Démarrer/Arrêter" src="images/play.png"/>
+            <button title="Démarrer/Arrêter" onclick="playPause();">
+                <img id="button_play" alt="Démarrer/Arrêter" src="images/play.png"/>
             </button>
-            <button title="Remplissage aléatoire" onclick="random(this);">
+            <button title="Remplissage aléatoire" onclick="random();">
                 <img alt="Remplissage aléatoire" src="images/random.png"/>
             </button>
-            <!-- Ajouter bouton : vider grille/reset -->
+            <button title="Effacer la grille" onclick="clearGrid()">
+                <img alt="Effacer la grille" src="images/clear.png"/>
+            </button>
         </div>
     </div>    
     <script type="text/javascript" src="listener.js"> </script>

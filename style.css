@@ -1,5 +1,5 @@
 body { 
-    background-color: bisque;
+    background-color: gainsboro;
 }
 
 h1 {
@@ -26,6 +26,11 @@ h1 {
 fieldset {
     margin: 20px;
     padding: 15px;
+}
+
+#statistiques > output {
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 #controls {

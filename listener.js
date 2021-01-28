@@ -1,18 +1,29 @@
+var imageButtonPlay = document.getElementById("button_play");
 var iterationsOutput = document.getElementById("iterations");
 var cellulesVivantesOutput = document.getElementById("alive");
 
-function playPause(button){
+function playPause(){
     isActive = !isActive
     if(isActive){
-        button.children[0].src = "images/pause.png"        
+        imageButtonPlay.src = "images/pause.png"        
         game()
     } else {
-        button.children[0].src = "images/play.png"
+        clearTimeout(timer);
+        imageButtonPlay.src = "images/play.png"
     }
 }
 
-function random(button){    
+function random(){    
     randomFill(parseInt(tauxRemplissage.value)/100);
+}
+
+function clearGrid(){
+    if(isActive)
+        playPause()
+    nbIterations = 0;
+    nbCellulesVivantes = 0;
+    updateStats();
+    initGrid();
 }
 
 function updateStats(){
