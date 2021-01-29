@@ -10,7 +10,7 @@
     <div class="game-container">
         <canvas id="grille">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
 
-        <div class="data-container">
+        <div id="data-container">
             <fieldset id="statistiques">
                 <legend>Statistiques</legend>
                 <label for="iterations">Nombre d'itérations :</label><br>
@@ -27,13 +27,14 @@
                 <output id="taille_output">600</output> <br>
 
                 <label for="vitesse">Vitesse :</label> <br>
-                <input type="range" id="vitesse" value="1" min="0" max="2" step="0.1" oninput="vitesse_output.value = this.value">
+                <input type="range" id="vitesse" value="1" min="0" max="2" step="0.1" oninput="inputVitesse(this)">
                 <output id="vitesse_output">1</output> <br>
 
                 <label for="taux_remplissage">Taux de remplissage (uniquement en mode aléatoire):</label> <br>
                 <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value+'%'">
                 <output id="taux_remplissage_output">30%</output>
             </fieldset>
+            
         </div>
         <div id="controls">
             <button title="Démarrer/Arrêter" onclick="playPause();">

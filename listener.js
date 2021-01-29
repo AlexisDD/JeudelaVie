@@ -1,10 +1,14 @@
 var imageButtonPlay = document.getElementById("button_play");
 var iterationsOutput = document.getElementById("iterations");
 var cellulesVivantesOutput = document.getElementById("alive");
+var tempsIterationOutput = document.getElementById("temps_iteration");
 
 function playPause(){
     isActive = !isActive
     if(isActive){
+        var finJeu = document.getElementById("fin_jeu");
+        if(finJeu != null)
+            parentContainer.removeChild(finJeu);
         imageButtonPlay.src = "images/pause.png"        
         game()
     } else {
@@ -15,6 +19,12 @@ function playPause(){
 
 function random(){    
     randomFill(parseInt(tauxRemplissage.value)/100);
+}
+
+function inputVitesse(input){
+    vitesse_output.value = input.value;
+    delay = calculateDelay(input.value);
+    updateStats();
 }
 
 function clearGrid(){
@@ -29,4 +39,11 @@ function clearGrid(){
 function updateStats(){
     iterationsOutput.value = nbIterations;
     cellulesVivantesOutput.value = nbCellulesVivantes;
+    var delaySecond = Math.round((delay/1000)*100)/100;
+    if(delaySecond == 0)
+        tempsIterationOutput.value = "Pause"
+    else if(delaySecond <= 1)
+        tempsIterationOutput.value = delaySecond + " seconde";
+    else
+        tempsIterationOutput.value = delaySecond + " secondes";
 }
