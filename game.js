@@ -100,12 +100,20 @@ function nbCellulesAutour(x,y){
     var nbVivantProche = 0;
     for (let posX = x-1; posX < x+2; posX++) {
         for (let posY = y-1; posY < y+2; posY++){
-            if ((posX == x && posY == y) 
-            || !(0 <= posY && posY < gridHeight)
-            || !(0 <= posX && posX < gridLength))
-                continue
-            if (grid[posX][posY].statut == 1)
+            if (!(posX == x && posY == y)){
+                posX1 = posX;
+                posY1 = posY;
+                if (posX < 0)
+                    posX1 = gridLength-1;
+                if (posY < 0)
+                    posY1 = gridHeight-1;                 
+                if (posX>gridLength-1)
+                    posX1 = 0;
+                if (posY>gridHeight-1)
+                    posY1 = 0;           
+                if (grid[posX1][posY1].statut == 1)
                 nbVivantProche += 1
+            }
         }
     }
     return nbVivantProche;
@@ -198,3 +206,26 @@ function arraysEqual(a1, a2) {
     }
     return true;
   }
+
+// Essais pour la lecture de fichiers xml : 
+
+var dossier = "formes/";
+var xml;
+recup_xml('forme.xml');
+setTimeout(affichage_forme, 2000);
+function recup_xml(file){
+    jQuery(document).ready(function($) {	
+        $.ajax( {
+                type: "GET",
+                url: dossier + file,
+                dataType: "xml",
+                success: function(data){
+                        xml=data;  
+                }
+            });        
+        }
+    );
+}
+function affichage_forme(){
+console.log(xml.getElementsByTagName("forme")[0].innerHTML);
+}
