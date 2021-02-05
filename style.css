@@ -49,6 +49,21 @@ fieldset {
     margin: 0 10px;
 }
 
+#forms_table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#forms_table td, #forms_table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#forms_table tr:nth-child(even){background-color: #f2f2f2;}
+
+#forms_table tr:hover {background-color: #ddd;}
+  
+
 /* Liste des formes spécifiques qui s'affiche au dessus de la page */
 
 .modal {
@@ -62,6 +77,7 @@ fieldset {
     height: 100%; 
     overflow: auto;
     background-color: rgba(0,0,0,0.4); /* Couleur de fond du reste de la page */
+    font-family: Arial, Helvetica, sans-serif;
   }
   
   .forms_content {

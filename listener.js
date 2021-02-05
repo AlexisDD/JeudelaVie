@@ -66,6 +66,13 @@ var btnDisplay = document.getElementById("display_forms_list");
 var btnClose = document.getElementById("close_list");
 
 btnDisplay.onclick = function() {
+    //En local (sans serveur web): les navigateurs ont une sécurité pour ne pas pouvoir lire des fichiers privés donc impossible de lire les fichiers xml
+    if(window.location.protocol === "file:"){
+        console.log("Non.")
+        return
+    }
+    loadForms();
+    
     listFormsModal.style.display = "block";
 }
 
@@ -74,7 +81,6 @@ btnClose.onclick = function() {
 }
 
 window.onclick = function(event) {
-    if (event.target == listFormsModal) {
+    if (event.target == listFormsModal)
         listFormsModal.style.display = "none";
-    }
 }

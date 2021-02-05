@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<formes>
+    <!-- en fait ça va être plus simple un fichier pour toutes les formes -->    
+    <forme> 
+        <name>Forme 1</name>
+        <min width="11" height="3"></min>
+        <max width="70" height="40"></max>   
+        <!--<max width="""" height=""""></max>-->
+        <pattern>11111011111\n00000100000\n11111011111\n</pattern>
+    </forme>
+
+    <forme> 
+        <name>Planeur (vers le sud-est)</name>
+        <min width="3" height="3"></min>
+        <!--<max width="""" height=""""></max>-->
+        <pattern>101\n011\n010\n</pattern>
+    </forme>
+
+</formes>

@@ -2,6 +2,7 @@ var width = 700;
 var height = 600;
 var cellSize = 20;
 var isActive = false;
+var formsList;
 
 var gridLength;
 var gridHeight;
@@ -142,7 +143,6 @@ function game(){
     for (x = 0; x < gridLength; x++){
 		for (y = 0; y < gridHeight; y++){
             var nb = nbCellulesAutour(x,y);
-            //règle 2 ignorée car pas de changement de statut
             if (nb == 3)
                 statut_next[x][y]=1;
             else if (nb < 2 || nb > 3)
@@ -219,27 +219,54 @@ function arraysEqual(a1, a2) {
     return true;
   }
 
-// Essais pour la lecture de fichiers xml : 
-
-//En local (sans serveur web): les navigateurs ont une sécurité pour ne pas pouvoir lire des fichiers privés donc impossible de lire les fichiers xml
-if(!(window.location.protocol === "file:")){
-    var dossier = "formes/";
-    recup_xml('forme.xml');
-}
-
-function recup_xml(file){
+function loadXML(file, callback){
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', dossier + file, true);
+    xhr.open('GET', file, true);
     xhr.timeout = 2000;
     
-    xhr.onload = function () {
-        var xmlDoc = this.responseXML; // le fichier xml récupéré
-        affichage_forme(xmlDoc);
-    };
+    xhr.onload = callback;
 
     xhr.send(null);
 }
 
-function affichage_forme(xml){
-    console.log(xml.getElementsByTagName("pattern")[0].childNodes[0].nodeValue);
+function loadForms(){
+    if(formsList === undefined){
+        loadXML('formes/formes.xml', function () {
+            formsList = this.responseXML.getElementsByTagName("forme");
+            fillFormsList();
+        });
+    } else {
+        fillFormsList();
+    }
+}
+
+function fillFormsList(){    
+    var parent = document.getElementById("list_forms");
+    if(document.getElementById("forms_table") != null)
+        parent.removeChild(document.getElementById("forms_table"));
+    var table = document.createElement("table");
+    table.id = "forms_table";
+    var tableBody = document.createElement("tbody");
+    
+    for(const forme of formsList){
+        console.log(forme.getElementsByTagName("name")[0].innerHTML)
+        var row = document.createElement("tr");
+
+        var cellPreview = document.createElement("td");
+        var name=forme.getElementsByTagName("name")[0].innerHTML;
+        var img = document.createElement("img");	
+        img.src="formes/img/" + name + ".JPG";
+        img.alt = name;
+
+        var cellName = document.createElement("td");
+        cellName.innerHTML = name;
+
+        row.appendChild(cellPreview);        
+        cellPreview.appendChild(img);
+        row.appendChild(cellName);
+        tableBody.appendChild(row);
+    }
+
+    table.appendChild(tableBody);
+    parent.appendChild(table);
 }
