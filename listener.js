@@ -47,3 +47,23 @@ function updateStats(){
     else
         tempsIterationOutput.value = delaySecond + " secondes";
 }
+
+/**  Liste des formes affichage  */
+
+var listFormsModal = document.getElementById("modal_forms");
+var btnDisplay = document.getElementById("display_forms_list");
+var btnClose = document.getElementById("close_list");
+
+btnDisplay.onclick = function() {
+    listFormsModal.style.display = "block";
+}
+
+btnClose.onclick = function() {
+    listFormsModal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == listFormsModal) {
+        modal.style.display = "none";
+    }
+}

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<forme  id="forme">
-11111011111
-00000100000
-11111011111
-</forme>
+
+
+<formes>
+    <!-- en fait ça va être plus simple un fichier pour toutes les formes -->    
+    <forme>
+        <name>Forme 1</name>
+        <min width="11" height="3"></min>
+        <max width="70" height="40"></max>   
+        <!-- interpréter les \n comme un changement de ligne -->
+        <pattern>11111011111\n00000100000\n11111011111</pattern>     
+    </forme>
+
+</formes>

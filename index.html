@@ -7,6 +7,12 @@
 </head>
 <body>
     <h1>Jeu de la vie</h1>
+    <div id="modal_forms" class="modal">
+        <div class="forms_content">
+          <span id="close_list">&times;</span>
+          <p>Liste des formes spécifiques</p>
+        </div>
+    </div>
     <div class="game-container">
         <canvas id="grille">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
 
@@ -34,7 +40,9 @@
                 <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value+'%'">
                 <output id="taux_remplissage_output">30%</output>
             </fieldset>
-            
+            <div id="specific_forms">
+                <button id="display_forms_list">Liste des formes spécifiques</button>
+            </div>
         </div>
         <div id="controls">
             <button title="Démarrer/Arrêter" onclick="playPause();">
@@ -48,7 +56,6 @@
             </button>
         </div>
     </div>    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="listener.js"> </script>
     <script type="text/javascript" src="class.js"> </script>
     <script type="text/javascript" src="game.js"> </script>

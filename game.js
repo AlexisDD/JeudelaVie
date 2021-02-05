@@ -209,23 +209,25 @@ function arraysEqual(a1, a2) {
 
 // Essais pour la lecture de fichiers xml : 
 
-var dossier = "formes/";
-var xml;
-recup_xml('forme.xml');
-setTimeout(affichage_forme, 2000);
-function recup_xml(file){
-    jQuery(document).ready(function($) {	
-        $.ajax( {
-                type: "GET",
-                url: dossier + file,
-                dataType: "xml",
-                success: function(data){
-                        xml=data;  
-                }
-            });        
-        }
-    );
+//En local (sans serveur web): les navigateurs ont une sécurité pour ne pas pouvoir lire des fichiers privés donc impossible de lire les fichiers xml
+if(!(window.location.protocol === "file:")){
+    var dossier = "formes/";
+    recup_xml('forme.xml');
 }
-function affichage_forme(){
-console.log(xml.getElementsByTagName("forme")[0].innerHTML);
+
+function recup_xml(file){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', dossier + file, true);
+    xhr.timeout = 2000;
+    
+    xhr.onload = function () {
+        var xmlDoc = this.responseXML; // le fichier xml récupéré
+        affichage_forme(xmlDoc);
+    };
+
+    xhr.send(null);
+}
+
+function affichage_forme(xml){
+    console.log(xml.getElementsByTagName("pattern")[0].childNodes[0].nodeValue);
 }
