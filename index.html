@@ -28,9 +28,17 @@
             </fieldset>
             <fieldset>
                 <legend>Paramètres</legend>                
-                <label for="taille_grille">Taille de la grille :</label> <br>
-                <input type="range" id="taille_grille" value="600" min="100" max="1000" oninput="taille_output.value = this.value">
-                <output id="taille_output">600</output> <br>
+                <label for="longueur_grille">Longueur de la grille :</label> <br>
+                <input type="range" id="longueur_grille" value="600" min="100" max="1000" onchange="sizeChange()" oninput="longueur_output.value = this.value">
+                <output id="longueur_output">600</output> <br>
+
+                <label for="largeur_grille">Largeur de la grille :</label> <br>
+                <input type="range" id="largeur_grille" value="600" min="100" max="1000" onchange="sizeChange()" oninput="largeur_output.value = this.value">
+                <output id="largeur_output">600</output> <br>
+
+                <label for="taille_cellule">Taille des cellules :</label> <br>
+                <input type="range" id="taille_cellule" value="20" min="5" max="40" onchange="sizeChange()" oninput="taille_cellule_output.value = this.value">
+                <output id="taille_cellule_output">20</output> <br>
 
                 <label for="vitesse">Vitesse :</label> <br>
                 <input type="range" id="vitesse" value="1" min="0" max="2" step="0.1" oninput="inputVitesse(this)">

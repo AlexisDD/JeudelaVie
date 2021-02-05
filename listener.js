@@ -2,6 +2,9 @@ var imageButtonPlay = document.getElementById("button_play");
 var iterationsOutput = document.getElementById("iterations");
 var cellulesVivantesOutput = document.getElementById("alive");
 var tempsIterationOutput = document.getElementById("temps_iteration");
+var longueurInput = document.getElementById("longueur_grille");
+var largeurInput = document.getElementById("largeur_grille");
+var tailleCelluleInput = document.getElementById("taille_cellule");
 
 function playPause(){
     isActive = !isActive
@@ -48,6 +51,14 @@ function updateStats(){
         tempsIterationOutput.value = delaySecond + " secondes";
 }
 
+function sizeChange(){
+    width = longueurInput.value;
+    height = largeurInput.value;
+    cellSize = tailleCelluleInput.value;
+    calculateCanvasSize();
+    initGrid();
+}
+
 /**  Liste des formes affichage  */
 
 var listFormsModal = document.getElementById("modal_forms");
@@ -64,6 +75,6 @@ btnClose.onclick = function() {
 
 window.onclick = function(event) {
     if (event.target == listFormsModal) {
-        modal.style.display = "none";
+        listFormsModal.style.display = "none";
     }
 }

@@ -36,6 +36,7 @@ class Cellule {
 
    dessiner() {
        ctx.beginPath();
+       ctx.lineWidth = "0.2";
        ctx.clearRect(this._x * cellSize, this._y*cellSize, cellSize, cellSize);
        if (this._statut!=0){
           /*        

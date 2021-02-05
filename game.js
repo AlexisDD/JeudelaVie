@@ -3,8 +3,8 @@ var height = 600;
 var cellSize = 20;
 var isActive = false;
 
-var gridLength = width / cellSize;
-var gridHeight = height / cellSize;
+var gridLength;
+var gridHeight;
 
 var c = document.getElementById("grille");
 var tauxRemplissage = document.getElementById("taux_remplissage");
@@ -20,9 +20,7 @@ var statutPrecedent;
 var ctx = c.getContext("2d");
 var grid = new Array(gridLength);
 
-c.width=width;
-c.height=height;
-
+calculateCanvasSize();
 initGrid();
 
 /**
@@ -54,11 +52,25 @@ function ajoutManuel(event){
     updateStats();
 }
 
+function calculateCanvasSize(){
+    if(width % cellSize != 0 || height % cellSize != 0){
+        gridLength = Math.floor(width / cellSize);
+        gridHeight = Math.floor(height / cellSize);
+        width -= width % cellSize;
+        height -= height % cellSize;
+    } else {
+        gridLength = width / cellSize;
+        gridHeight = height / cellSize;
+    }
+    c.width=width;
+    c.height=height;
+}
 /**
  * Initialise la grille du jeu, et dessine toutes les cellules (mortes pour l'instant)
  */
 function initGrid(){
     ctx.beginPath();
+    ctx.lineWidth = "0.2";
     for (var x = 0; x < gridLength; x += 1){        
         grid[x] = new Array(gridHeight); 
         for (var y = 0; y < gridHeight; y += 1){
