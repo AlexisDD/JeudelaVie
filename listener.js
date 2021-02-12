@@ -71,9 +71,11 @@ btnDisplay.onclick = function() {
         console.log("Non.")
         return
     }
-    loadForms();
-    
-    listFormsModal.style.display = "block";
+    if(document.getElementById("img_bouge") == null){
+        loadForms();
+        
+        listFormsModal.style.display = "block";
+    }
 }
 
 btnClose.onclick = function() {

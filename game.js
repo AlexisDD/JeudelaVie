@@ -12,6 +12,10 @@ var c = document.getElementById("grille");
 var tauxRemplissage = document.getElementById("taux_remplissage");
 var vitesse = document.getElementById("vitesse");
 var parentContainer = document.getElementById("data-container");
+var div_dynamique = document.getElementById("img_dynamique_container");
+
+var regAccentA = new RegExp('[àâä]', 'gi');
+var regAccentE = new RegExp('[éèêë]', 'gi');
 
 var delay = 1000;
 var timer;
@@ -34,7 +38,15 @@ c.addEventListener('click', function(event) {
         playPause();
         clearTimeout(timer);
     }        
+    if(document.getElementById("img_bouge") != null){
+        img=document.getElementById("img_bouge");
+        name=img.alt;
+        div_dynamique.removeChild(document.getElementById("img_bouge"));
+        alert("Il n'y a plus qu'à placer : " + name);
+
+    }else{
     ajoutManuel(event);
+    }
 }, false);
 
 /**
@@ -271,15 +283,13 @@ function fillFormsList(){
     var tableBody = document.createElement("tbody");
     
     for(const forme of formsList){
-        console.log(forme.getElementsByTagName("name")[0].innerHTML)
         var row = document.createElement("tr");
+        row.setAttribute("onclick", "choix_forme(this)");
 
         var cellPreview = document.createElement("td");
         var name=forme.getElementsByTagName("name")[0].innerHTML;
 
-        var regAccentA = new RegExp('[àâä]', 'gi');
-        var regAccentE = new RegExp('[éèêë]', 'gi');
-
+        old_name=name;
         name = name.replace(regAccentA, 'a'); // problème avec le serveur qui n'accecpte pas les accents
         name = name.replace(regAccentE, 'e');
         
@@ -298,6 +308,33 @@ function fillFormsList(){
 
     table.appendChild(tableBody);
     parent.appendChild(table);
+}
+
+function choix_forme(container){
+    name=container.getElementsByTagName("td")[1].innerHTML;
+    old_name=name;
+    name = name.replace(regAccentA, 'a');
+    name = name.replace(regAccentE, 'e');
+    
+    var img = document.createElement("img");
+    img.src="formes/img/" + name + ".jpg";
+    img.alt = old_name;   
+    img.id="img_bouge";      
+    img.setAttribute("style", "position:absolute;display:block;");
+    div_dynamique.appendChild(img);
+
+
+    btnClose.click();
+}
+
+c.onmousemove= function(event) {
+    if(document.getElementById("img_bouge") != null){
+        img_bouge=document.getElementById("img_bouge");
+        x = event.offsetX;
+        y = event.offsetY;
+        img_bouge.style.left = (x+1)+'px';
+        img_bouge.style.top  = (y+15)+'px';
+    }
 }
 
 function displayForms(formsToDisplay){
