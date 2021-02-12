@@ -254,6 +254,13 @@ function fillFormsList(){
 
         var cellPreview = document.createElement("td");
         var name=forme.getElementsByTagName("name")[0].innerHTML;
+
+        var regAccentA = new RegExp('[àâä]', 'gi');
+        var regAccentE = new RegExp('[éèêë]', 'gi');
+
+        name = name.replace(regAccentA, 'a'); // problème avec le serveur qui n'accecpte pas les accents
+        name = name.replace(regAccentE, 'e');
+        
         var img = document.createElement("img");	
         img.src="formes/img/" + name + ".JPG";
         img.alt = name;
