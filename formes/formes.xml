@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
 <formes>
-    <!-- en fait ça va être plus simple un fichier pour toutes les formes -->    
     <forme> 
         <name>Forme 1</name>
         <min width="11" height="3"></min>

@@ -3,6 +3,7 @@ var height = 600;
 var cellSize = 20;
 var isActive = false;
 var formsList;
+var lettersList;
 
 var gridLength;
 var gridHeight;
@@ -23,6 +24,7 @@ var grid = new Array(gridLength);
 
 calculateCanvasSize();
 initGrid();
+loadLetters();
 
 /**
  * Ecoute les clics sur la grille et modifie le statut de la cellule cliquée
@@ -238,12 +240,34 @@ function loadForms(){
     }
 }
 
+function loadLetters(){
+    if(lettersList === undefined){
+        loadXML('formes/lettres.xml', function () {
+            lettersList = Array.from(this.responseXML.getElementsByTagName("lettre"));
+        });
+    }
+}
+
 function fillFormsList(){    
     var parent = document.getElementById("forms_content");
     if(document.getElementById("forms_table") != null)
         parent.removeChild(document.getElementById("forms_table"));
     var table = document.createElement("table");
     table.id = "forms_table";
+
+    /* Table Head : légende */
+    var tableHead = document.createElement("thead");
+    var headRow = document.createElement("tr");
+    var previewTitle = document.createElement("td");
+    previewTitle.innerHTML = "Prévisualisation";
+    var nameTitle = document.createElement("td");
+    nameTitle.innerHTML = "Nom";
+    headRow.appendChild(previewTitle);
+    headRow.appendChild(nameTitle);
+    tableHead.appendChild(headRow);
+    table.appendChild(tableHead);
+    
+    /* Table Body : liste des formes */
     var tableBody = document.createElement("tbody");
     
     for(const forme of formsList){
@@ -259,8 +283,8 @@ function fillFormsList(){
         name = name.replace(regAccentA, 'a'); // problème avec le serveur qui n'accecpte pas les accents
         name = name.replace(regAccentE, 'e');
         
-        var img = document.createElement("img");	
-        img.src="formes/img/" + name + ".JPG";
+        var img = document.createElement("img");
+        img.src="formes/img/" + name + ".jpg";
         img.alt = name;
 
         var cellName = document.createElement("td");
@@ -274,4 +298,29 @@ function fillFormsList(){
 
     table.appendChild(tableBody);
     parent.appendChild(table);
+}
+
+function displayForms(formsToDisplay){
+    var x = 1;
+    var y = 1;
+    for (const forme of formsToDisplay) {
+        var pattern = forme.getElementsByTagName("pattern")[0].innerHTML
+        var patternLines = pattern.split("\\n");
+
+        for (let element of patternLines) {
+            y=1;
+            for(let c of element){
+                console.log(element)
+
+                console.log(c, x, y)
+                grid[x][y].statut = parseInt(c);
+                y++;
+                if(y >= gridHeight)
+                    break;
+            }
+            x++;
+            if(x >= gridLength)
+                break;
+        }
+    }
 }

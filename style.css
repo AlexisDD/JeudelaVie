@@ -19,6 +19,7 @@ h1 {
 }
 
 #specific_forms {
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -49,21 +50,6 @@ fieldset {
     margin: 0 10px;
 }
 
-#forms_table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#forms_table td, #forms_table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#forms_table tr:nth-child(even){background-color: #f2f2f2;}
-
-#forms_table tr:hover {background-color: #ddd;}
-  
-
 /* Liste des formes spécifiques qui s'affiche au dessus de la page */
 
 .modal {
@@ -77,9 +63,9 @@ fieldset {
     height: 100%; 
     background-color: rgba(0,0,0,0.4); /* Couleur de fond du reste de la page */
     font-family: Arial, Helvetica, sans-serif;
-  }
+}
   
-  #forms_content {
+#forms_content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
@@ -90,11 +76,10 @@ fieldset {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
     animation-duration: 0.3s;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
+    overflow: auto;
+}
   
-  #close_list {
+#close_list {
     position: absolute;
     top: 5px;
     right: 35px;
@@ -102,14 +87,36 @@ fieldset {
     font-size: 60px;
     font-weight: bold;
     transition: 0.3s;
-  }
+}
   
-  #close_list:hover,
-  #close_list:focus {
+#close_list:hover,
+#close_list:focus {
     color: #993838;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
+#forms_table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid rgb(200, 200, 200);
+}
+
+#forms_table thead {
+    background-color: #2d88af;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+#forms_table td, #forms_table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#forms_table tbody tr:nth-child(even){background-color: #f2f2f2;}
+
+#forms_table tbody tr:hover {background-color: #ddd;}
+
 
 /* On définit l'animation voulue pour l'apparition de la liste des formes */
 @keyframes 

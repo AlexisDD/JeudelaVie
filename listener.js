@@ -84,3 +84,29 @@ window.onclick = function(event) {
     if (event.target == listFormsModal)
         listFormsModal.style.display = "none";
 }
+
+function insertCharacters(chain){
+    var parent = document.getElementById("specific_forms_parent");
+    if(document.getElementById("result_form") != null)
+        parent.removeChild(document.getElementById("result_form"));
+    match = /^\p{ASCII}+$/u.test(chain);        
+    
+    var p = document.createElement("p");
+    p.setAttribute("id", "result_form");
+    p.style.cssText = 'font-size: medium; font-weight: bold; margin: 10px;';
+
+    if(match){
+        p.append("L'expression donnée a été insérée dans la grille.");
+        var chainLetters = [];
+        console.log(lettersList);
+        for (let i = 0; i < chain.length; i++) {
+            var code = chain.charCodeAt(i);
+            chainLetters.push(lettersList.find(letter => letter.getElementsByTagName("name")[0].innerHTML == "chr"+code));
+        }
+        console.log(chainLetters);
+        displayForms(chainLetters);
+    } else {
+        p.append("L'expression donnée ne peut pas être insérée dans la grille.");
+    }        
+    parent.append(p);
+}

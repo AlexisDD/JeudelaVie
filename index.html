@@ -10,7 +10,7 @@
     <div id="modal_forms" class="modal">
         <div id="forms_content">
           <span id="close_list">&times;</span>
-          <p>Liste des formes spécifiques</p>
+          <h4>Liste des formes spécifiques</h4>
         </div>
     </div>
     <div class="game-container">
@@ -48,9 +48,15 @@
                 <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value+'%'">
                 <output id="taux_remplissage_output">30%</output>
             </fieldset>
-            <div id="specific_forms">
-                <button id="display_forms_list">Liste des formes spécifiques</button>
-            </div>
+            <fieldset id="specific_forms_parent">
+                <legend>Formes spécifiques</legend>
+                <div id="specific_forms">
+                    <button id="display_forms_list">Liste des formes spécifiques</button>
+                </div>
+                <label for="insert_character">Insérer une expression (nombres, lettres, caractères spéciaux, ..) à insérer dans la grille:</label> <br>
+                <input type="text" id="insert_character" required>
+                <button id="insert_character_button" onclick="insertCharacters(insert_character.value);">OK</button>
+            </fieldset>
         </div>
         <div id="controls">
             <button title="Démarrer/Arrêter" onclick="playPause();">
