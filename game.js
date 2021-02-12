@@ -235,13 +235,11 @@ function loadForms(){
             formsList = this.responseXML.getElementsByTagName("forme");
             fillFormsList();
         });
-    } else {
-        fillFormsList();
     }
 }
 
 function fillFormsList(){    
-    var parent = document.getElementById("list_forms");
+    var parent = document.getElementById("forms_content");
     if(document.getElementById("forms_table") != null)
         parent.removeChild(document.getElementById("forms_table"));
     var table = document.createElement("table");
