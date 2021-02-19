@@ -338,26 +338,25 @@ c.onmousemove= function(event) {
 }
 
 function displayForms(formsToDisplay){
-    var x = 1;
-    var y = 1;
+    var x = 0;
+    var line = 0;
     for (const forme of formsToDisplay) {
         var pattern = forme.getElementsByTagName("pattern")[0].innerHTML
         var patternLines = pattern.split("\\n");
-
+        var max = x + patternLines.length;
+        if(max >= gridLength){
+            x=0;
+            line++;
+        }
         for (let element of patternLines) {
-            y=1;
+            y= (line*8)+1;
+            x++;
             for(let c of element){
-                console.log(element)
-
-                console.log(c, x, y)
                 grid[x][y].statut = parseInt(c);
                 y++;
                 if(y >= gridHeight)
                     break;
             }
-            x++;
-            if(x >= gridLength)
-                break;
         }
     }
 }

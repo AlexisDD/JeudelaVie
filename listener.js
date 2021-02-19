@@ -54,7 +54,7 @@ function updateStats(){
 function sizeChange(){
     width = longueurInput.value;
     height = largeurInput.value;
-    cellSize = tailleCelluleInput.value;
+    cellSize = parseInt(tailleCelluleInput.value);
     calculateCanvasSize();
     initGrid();
 }
