@@ -39,11 +39,40 @@ c.addEventListener('click', function(event) {
         clearTimeout(timer);
     }        
     if(document.getElementById("img_bouge") != null){
-        img=document.getElementById("img_bouge");
-        name=img.alt;
-        div_dynamique.removeChild(document.getElementById("img_bouge"));
-        alert("Il n'y a plus qu'à placer : " + name);
-
+        x = event.clientX;
+        y = event.clientY;    
+        if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){   
+            img=document.getElementById("img_bouge");
+            name=img.alt;
+            div_dynamique.removeChild(document.getElementById("img_bouge"));
+            forme = formsList.find(forme => forme.getElementsByTagName("name")[0].innerHTML == name)
+            var cases=forme.getElementsByTagName("pattern")[0].innerHTML;            
+            var x = Math.floor(event.offsetX / cellSize)+1;
+            var y = Math.floor(event.offsetY / cellSize)+1;
+            var x_save = x;
+            for (var i = 0; i < cases.length; i++) {
+                cell=cases[i];        
+                const cellule = grid[x][y];          
+                if (cell=="0"){
+                    if (cellule.statut==1){
+                        cellule.statut=0;
+                        nbCellulesVivantes--;
+                        updateStats();
+                    }                    
+                    x++;
+                }else if (cell=="1"){
+                    if (cellule.statut==0){
+                        cellule.statut=1;
+                        nbCellulesVivantes++;
+                        updateStats();
+                    }                    
+                    x++;
+                }else if (cell=="n"){
+                    x = x_save;
+                    y++;
+                }
+            }
+        }   
     }else{
     ajoutManuel(event);
     }
@@ -246,7 +275,7 @@ function loadXML(file, callback){
 function loadForms(){
     if(formsList === undefined){
         loadXML('formes/formes.xml', function () {
-            formsList = this.responseXML.getElementsByTagName("forme");
+            formsList = Array.from(this.responseXML.getElementsByTagName("forme"));
             fillFormsList();
         });
     }
@@ -295,10 +324,10 @@ function fillFormsList(){
         
         var img = document.createElement("img");
         img.src="formes/img/" + name + ".jpg";
-        img.alt = name;
+        img.alt = old_name;
 
         var cellName = document.createElement("td");
-        cellName.innerHTML = name;
+        cellName.innerHTML = old_name;
 
         row.appendChild(cellPreview);        
         cellPreview.appendChild(img);
@@ -316,24 +345,34 @@ function choix_forme(container){
     name = name.replace(regAccentA, 'a');
     name = name.replace(regAccentE, 'e');
     
+    left_canvas= c.getBoundingClientRect().left;
+    top_canvas = c.getBoundingClientRect().top;
+
     var img = document.createElement("img");
     img.src="formes/img/" + name + ".jpg";
     img.alt = old_name;   
     img.id="img_bouge";      
-    img.setAttribute("style", "position:absolute;display:block;");
+    img.setAttribute("style", "position:absolute; left:" + left_canvas + "px; " + "top:" + top_canvas + "px; display:block;");
     div_dynamique.appendChild(img);
 
 
     btnClose.click();
 }
-
-c.onmousemove= function(event) {
-    if(document.getElementById("img_bouge") != null){
-        img_bouge=document.getElementById("img_bouge");
-        x = event.offsetX;
-        y = event.offsetY;
-        img_bouge.style.left = (x+1)+'px';
-        img_bouge.style.top  = (y+15)+'px';
+document.onmousemove = function (event){       
+    x = event.clientX;
+    y = event.clientY;     
+    left_canvas= c.getBoundingClientRect().left;
+    top_canvas = c.getBoundingClientRect().top;
+    width = c.width;
+    height = c.height;
+    if (x > left_canvas && x < (width+left_canvas) && y > top_canvas && y < (height+top_canvas)){           
+        if(document.getElementById("img_bouge") != null){
+            img_bouge=document.getElementById("img_bouge");
+            if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){
+                img_bouge.style.left =  (x + 1) + 'px';
+                img_bouge.style.top  =  (y + 1) + 'px';
+            }
+        }
     }
 }
 

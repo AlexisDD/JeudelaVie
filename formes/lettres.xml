@@ -362,9 +362,9 @@
 	</lettre>
 	
 	
-	<lettre> 
-		<name>chr92</name><!--   \   --> 
-		<pattern>0000000\n1010100\n0110100\n0011111\n0110100\n1010100\n0000000</pattern>
+	 <lettre>
+	    <name>chr92</name><!--   \   -->      
+		<pattern>0000000\n0100000\n0010000\n0001000\n0000100\n0000010\n0000000</pattern> 
 	</lettre>
 	
 	
