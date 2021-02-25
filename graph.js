@@ -1,4 +1,4 @@
-var ctx = document.getElementById('graph').getContext('2d');
+var ctxGraph = document.getElementById('graph').getContext('2d');
 var dataValues = [0,1,2,3,4,2,6,8,9,1];
 var dataIndices;
 updateIndices();
@@ -26,7 +26,7 @@ var config = {
 drawGraph(dataValues)
 function drawGraph(listeNbCellules){
     dataValues=listeNbCellules;
-    var graph = new Chart(ctx, config);
+    var graph = new Chart(ctxGraph, config);
 }
 
 function updateIndices(){

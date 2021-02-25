@@ -106,7 +106,7 @@ function insertCharacters(chain){
             chainLetters.push(lettersList.find(letter => letter.getElementsByTagName("name")[0].innerHTML == "chr"+code));
         }
         console.log(chainLetters);
-        displayForms(chainLetters);
+        displayAscii(chainLetters);
     } else {
         p.append("L'expression donnée ne peut pas être insérée dans la grille.");
     }        

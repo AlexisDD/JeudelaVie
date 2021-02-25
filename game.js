@@ -46,35 +46,13 @@ c.addEventListener('click', function(event) {
             name=img.alt;
             div_dynamique.removeChild(document.getElementById("img_bouge"));
             forme = formsList.find(forme => forme.getElementsByTagName("name")[0].innerHTML == name)
-            var cases=forme.getElementsByTagName("pattern")[0].innerHTML;            
             var x = Math.floor(event.offsetX / cellSize)+1;
             var y = Math.floor(event.offsetY / cellSize)+1;
-            var x_save = x;
-            for (var i = 0; i < cases.length; i++) {
-                cell=cases[i];        
-                const cellule = grid[x][y];          
-                if (cell=="0"){
-                    if (cellule.statut==1){
-                        cellule.statut=0;
-                        nbCellulesVivantes--;
-                        updateStats();
-                    }                    
-                    x++;
-                }else if (cell=="1"){
-                    if (cellule.statut==0){
-                        cellule.statut=1;
-                        nbCellulesVivantes++;
-                        updateStats();
-                    }                    
-                    x++;
-                }else if (cell=="n"){
-                    x = x_save;
-                    y++;
-                }
-            }
+            if(forme !== undefined)
+                displayForm(forme, x, y);
         }   
-    }else{
-    ajoutManuel(event);
+    } else{
+        ajoutManuel(event);
     }
 }, false);
 
@@ -358,6 +336,7 @@ function choix_forme(container){
 
     btnClose.click();
 }
+
 document.onmousemove = function (event){       
     x = event.clientX;
     y = event.clientY;     
@@ -376,7 +355,7 @@ document.onmousemove = function (event){
     }
 }
 
-function displayForms(formsToDisplay){
+function displayAscii(formsToDisplay){
     var x = 0;
     var line = 0;
     for (const forme of formsToDisplay) {
@@ -391,11 +370,43 @@ function displayForms(formsToDisplay){
             y= (line*8)+1;
             x++;
             for(let c of element){
-                grid[x][y].statut = parseInt(c);
+                s = parseInt(c);
+                if (grid[x][y].statut != s){
+                    grid[x][y].statut = s;
+                    if(grid[x][y].statut)
+                        nbCellulesVivantes++;
+                    else
+                        nbCellulesVivantes--;
+                }
                 y++;
                 if(y >= gridHeight)
                     break;
             }
         }
     }
+    updateStats();
+}
+
+function displayForm(forme, x, y){
+    var x_depart = x;
+    var pattern = forme.getElementsByTagName("pattern")[0].innerHTML;
+    var patternLines = pattern.split("\\n");
+    for (let element of patternLines) {
+        x=x_depart;
+        y++;
+        for(let c of element){
+            s = parseInt(c);
+            if (grid[x][y].statut != s){
+                grid[x][y].statut = s;
+                if(grid[x][y].statut)
+                    nbCellulesVivantes++;
+                else
+                    nbCellulesVivantes--;
+            }
+            x++;
+            if(y >= gridHeight)
+                break;
+        }
+    }
+    updateStats();
 }
