@@ -1,4 +1,4 @@
-var width = 700;
+var width = 600;
 var height = 600;
 var cellSize = 20;
 var isActive = false;
@@ -48,7 +48,7 @@ c.addEventListener('click', function(event) {
             div_dynamique.removeChild(document.getElementById("img_bouge"));
             forme = formsList.find(forme => forme.getElementsByTagName("name")[0].innerHTML == name)
             var x = Math.floor(event.offsetX / cellSize)+1;
-            var y = Math.floor(event.offsetY / cellSize)+1;
+            var y = Math.floor(event.offsetY / cellSize);
             if(forme !== undefined)
                 displayForm(forme, x, y);
         }   
@@ -91,7 +91,7 @@ function calculateCanvasSize(){
 /**
  * Initialise la grille du jeu, et dessine toutes les cellules (mortes pour l'instant)
  */
-function initGrid(){
+function initGrid(){    
     cellulesParIteration = [];
     ctx.beginPath();
     ctx.lineWidth = "0.2";
@@ -327,19 +327,64 @@ function choix_forme(container){
     name = name.replace(regAccentA, 'a');
     name = name.replace(regAccentE, 'e');
     
-    left_canvas= c.getBoundingClientRect().left;
-    top_canvas = c.getBoundingClientRect().top;
 
+
+    // Vérification de la taille minimale de la grille
+    forme = formsList.find(forme => forme.getElementsByTagName("name")[0].innerHTML == old_name);
+    img_width = parseInt(forme.getElementsByTagName("min")[0].getElementsByTagName("width")[0].innerHTML) + 2 ;
+    img_height = parseInt(forme.getElementsByTagName("min")[0].getElementsByTagName("height")[0].innerHTML) + 2 ;
+    cell = tailleCelluleInput.value;
+    width = longueurInput.value;
+    height = largeurInput.value;
+    new_width= cell*img_width+4*cell;
+    new_height= cell*img_height+4*cell;
+    img_cell_min=cell;
+    max_width=longueurInput.max;
+    max_height=largeurInput.max;
+    if (new_width > width || new_height > height){    
+        if (new_width > width){
+            if (new_width > max_width)
+                width = max_width;
+            else 
+                width = new_width;
+            longueurInput.value=width;       
+            longueur_output.value=width;   
+        }
+        if (new_height > height){
+            if (new_height > max_height)
+                height = max_height;
+            else 
+                height = new_height;
+            largeurInput.value=height;       
+            largeur_output.value=height;   
+        }
+        if (new_width > width || new_height > height){
+            img_cell_min = Math.min( parseInt(width/img_width)-1 , parseInt(height/img_height)-1);
+            if (img_cell_min < tailleCelluleInput.min || img_cell_min > tailleCelluleInput.max){
+                alert("Impossible de placer la forme");
+            }
+            taille_cellule_output.value=img_cell_min;
+            tailleCelluleInput.value=img_cell_min; 
+        } 
+        sizeChange();     
+    }
+    new_width= img_cell_min*img_width;
+    new_height= img_cell_min*img_height;
+    window.scroll(0,0);
+    left_canvas= c.getBoundingClientRect().left;
+    top_canvas = c.getBoundingClientRect().top; 
+    
     var img = document.createElement("img");
     img.src="formes/img/" + name + ".jpg";
     img.alt = old_name;   
-    img.id="img_bouge";      
-    img.setAttribute("style", "position:absolute; left:" + left_canvas + "px; " + "top:" + top_canvas + "px; display:block;");
+    img.id="img_bouge";    
+    img.setAttribute("style", "position:absolute; left:" + left_canvas + "px; " + "top:" + top_canvas + "px; width:" + new_width + "px; display:block;");
     div_dynamique.appendChild(img);
 
-
     btnClose.click();
+      
 }
+
 
 document.onmousemove = function (event){       
     x = event.clientX;
@@ -356,6 +401,21 @@ document.onmousemove = function (event){
                 img_bouge.style.top  =  (y + 1) + 'px';
             }
         }
+    }
+}
+
+document.oncontextmenu = function (){          // à chaque clic droit 
+    if(document.getElementById("img_bouge") != null){
+        div_dynamique.removeChild(document.getElementById("img_bouge"));
+        return false;
+    }
+}
+
+document.onkeydown = function(event){
+    if(document.getElementById("img_bouge") != null){
+        keynum = event.which;
+        if (keynum == 8 ||  keynum ==27 || keynum ==46 || keynum ==110) // espace, backspace, del, del (numpad) 
+            div_dynamique.removeChild(document.getElementById("img_bouge"));
     }
 }
 

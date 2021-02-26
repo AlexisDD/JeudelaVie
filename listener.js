@@ -8,6 +8,7 @@ var tailleCelluleInput = document.getElementById("taille_cellule");
 
 var longueur_output = document.getElementById("longueur_output");
 var largeur_output = document.getElementById("largeur_output");
+var taille_cellule_output = document.getElementById("taille_cellule_output");
 
 function playPause(){
     isActive = !isActive

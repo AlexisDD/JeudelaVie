@@ -2,184 +2,236 @@
 <formes>
     <forme> 
         <name>Forme 1</name>
-        <min width="11" height="3"></min>
+        <min>
+            <width>11</width>
+            <height>3</height>
+        </min>
         <max width="70" height="40"></max>   
-        <!--<max width="""" height=""""></max>-->
         <pattern>11111011111\n00000100000\n11111011111</pattern>
     </forme>
 
     <forme> 
         <name>Planeur (vers le sud-est)</name>
-        <min width="3" height="3"></min>
-        <!--<max width="""" height=""""></max>-->
+        <min>
+            <width>3</width>
+            <height>3</height>
+        </min>
         <pattern>101\n011\n010</pattern>
     </forme>
 
     <forme> 
         <name>Le clignotant</name>
-        <min width='3' height='1'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>3</width>
+            <height>1</height>
+        </min>
         <pattern>111</pattern>
     </forme>
 
     <forme> 
         <name>Un rectangle 4x1</name>
-        <min width='4' height='1'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>1</height>
+        </min>
         <pattern>1111</pattern>
     </forme>
 
     <forme> 
         <name>La ruche</name>
-        <min width='4' height='3'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>3</height>
+        </min>
         <pattern>0110\n1001\n0110</pattern>
     </forme>
 
     <forme> 
         <name>Un rectangle 5x1</name>
-        <min width='5' height='1'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>5</width>
+            <height>1</height>
+        </min>
         <pattern>11111</pattern>
     </forme>
 
     <forme> 
         <name>Un bloc</name>
-        <min width='2' height='2'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>2</width>
+            <height>2</height>
+        </min>
         <pattern>11\n11</pattern>
     </forme>
 
     <forme> 
         <name>Le bateau</name>
-        <min width='3' height='3'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>3</width>
+            <height>3</height>
+        </min>
         <pattern>011\n101\n010</pattern>
     </forme>
 
     <forme> 
         <name>Le pain</name>
-        <min width='4' height='4'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>4</height>
+        </min>
         <pattern>0010\n0101\n1001\n0110</pattern>
     </forme>
 
     <forme> 
         <name>La mare</name>
-        <min width='4' height='4'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>4</height>
+        </min>
         <pattern>0110\n1001\n1001\n0110</pattern>
     </forme>
 
     <forme> 
         <name>La balise</name>
-        <min width='4' height='4'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>4</height>
+        </min>
         <pattern>0011\n0011\n1100\n1100</pattern>
     </forme>
 
     <forme> 
         <name>Le crapeau</name>
-        <min width='4' height='2'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>2</height>
+        </min>
         <pattern>1110\n0111</pattern>
     </forme>
 
     <forme> 
         <name>La ruche évoluée</name>
-        <min width='3' height='4'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>3</width>
+            <height>4</height>
+        </min>
         <pattern>011\n101\n101\n010</pattern>
     </forme>
 
     <forme> 
         <name>L'escalier</name>
-        <min width='4' height='3'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>4</width>
+            <height>3</height>
+        </min>
         <pattern>0011\n0110\n1100</pattern>
     </forme>
 
     <forme> 
         <name>Forme 2</name>
-        <min width='3' height='3'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>3</width>
+            <height>3</height>
+        </min>
         <pattern>011\n110\n010</pattern>
     </forme>
 
     <forme> 
         <name>Cthulhu</name>
-        <min width='11' height='13'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>11</width>
+            <height>13</height>
+        </min>
         <pattern>01000100010\n10101010101\n10101010101\n01101010110\n00001010000\n00001010000\n00011011000\n00100001000\n00110110000\n00010100000\n00100100000\n00101000000\n01101100000</pattern>
     </forme>
 
     <forme> 
         <name>Le pulsar</name>
-        <min width='5' height='5'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>5</width>
+            <height>5</height>
+        </min>
         <pattern>10101\n10001\n10001\n10001\n10101</pattern>
     </forme>
 
     <forme> 
         <name>Le penta-décathlon</name>
-        <min width='10' height='1'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>10</width>
+            <height>1</height>
+        </min>
         <pattern>1111111111</pattern>
     </forme>
 
     <forme> 
         <name>Grand vaisseau spatial</name>
-        <min width='7' height='5'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>7</width>
+            <height>5</height>
+        </min>
         <pattern>0111111\n1000001\n0000001\n1000010\n0011000</pattern>
     </forme>
 
     <forme> 
         <name>Vaisseau spatial moyen</name>
-        <min width='6' height='5'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>6</width>
+            <height>5</height>
+        </min>
         <pattern>011111\n100001\n000001\n100010\n001000</pattern>
     </forme>
 
     <forme> 
         <name>Petit vaisseau spatial</name>
-        <min width='5' height='4'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>5</width>
+            <height>4</height>
+        </min>
         <pattern>01111\n10001\n00001\n10010</pattern>
     </forme>
 
     <forme> 
         <name>L'oie du Canada</name>
-        <min width='12' height='13'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>12</width>
+            <height>13</height>
+        </min>
         <pattern>000000000010\n000000000011\n110000000101\n010110000000\n000110011000\n000110011000\n000000110000\n001011110000\n010110101000\n000000001100\n001110010100\n000000000010\n000000001100</pattern>
     </forme>
 
     <forme> 
         <name>60P5H2V0</name>
-        <min width='11' height='19'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>11</width>
+            <height>19</height>
+        </min>
         <pattern>11001100000\n00000110000\n00110100000\n00100000010\n00000000010\n00010000001\n00001010110\n10100000110\n11111111000\n00000000000\n11111111000\n10100000110\n00001010110\n00010000001\n00000000010\n00100000010\n00110100000\n00000110000\n11001100000</pattern>
     </forme>
 
     <forme> 
         <name>Le canon à planeur</name>
-        <min width='36' height='9'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>36</width>
+            <height>9</height>
+        </min>
         <pattern>000000000000110000000000000000000000\n000000000001000100000000000000000000\n000000000010000010000000100000000000\n110000000010001011000010100000000000\n110000000010000010001100000000000000\n000000000001000100001100000000000011\n000000000000110000001100000000000011\n000000000000000000000010100000000000\n000000000000000000000000100000000000</pattern>
     </forme>
 
     <forme> 
         <name>Le fumeur</name>
-        <min width='7' height='26'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>7</width>
+            <height>26</height>
+        </min>
         <pattern>0000010\n0000001\n1000001\n0111111\n0000000\n0000000\n1110000\n1100000\n0000100\n0000110\n0000011\n0000110\n0000000\n0000000\n0000110\n0000011\n0000110\n0000100\n1100000\n1110000\n0000000\n0000000\n0111111\n1000001\n0000001\n0000010</pattern>
     </forme>
 
     <forme> 
         <name>Petite structure à croissance infinie</name>
-        <min width='8' height='6'></min>
-        <!--<max width='' height=''></max>-->
+        <min>
+            <width>8</width>
+            <height>6</height>
+        </min>
         <pattern>10100000\n00100000\n00001000\n00001010\n00001011\n00000010</pattern>
     </forme>
 
