@@ -21,6 +21,7 @@ var delay = 1000;
 var timer;
 var nbIterations = 0;
 var nbCellulesVivantes = 0;
+var cellulesParIteration = [];
 var statutPrecedent;
 
 var ctx = c.getContext("2d");
@@ -91,6 +92,7 @@ function calculateCanvasSize(){
  * Initialise la grille du jeu, et dessine toutes les cellules (mortes pour l'instant)
  */
 function initGrid(){
+    cellulesParIteration = [];
     ctx.beginPath();
     ctx.lineWidth = "0.2";
     for (var x = 0; x < gridLength; x += 1){        
@@ -185,6 +187,8 @@ function game(){
 
     nbIterations++;
     nbCellulesVivantes = nbVivants;
+    cellulesParIteration.push(nbCellulesVivantes);
+    updateData(cellulesParIteration);
     updateStats();
 
     // Si aucune cellule n'a changé de statut ou la grille est vide, arrêt du jeu

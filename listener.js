@@ -6,6 +6,9 @@ var longueurInput = document.getElementById("longueur_grille");
 var largeurInput = document.getElementById("largeur_grille");
 var tailleCelluleInput = document.getElementById("taille_cellule");
 
+var longueur_output = document.getElementById("longueur_output");
+var largeur_output = document.getElementById("largeur_output");
+
 function playPause(){
     isActive = !isActive
     if(isActive){
@@ -16,6 +19,7 @@ function playPause(){
         game()
     } else {
         clearTimeout(timer);
+        updateData(cellulesParIteration);
         imageButtonPlay.src = "images/play.png"
     }
 }
@@ -35,6 +39,7 @@ function clearGrid(){
         playPause()
     nbIterations = 0;
     nbCellulesVivantes = 0;
+    cellulesParIteration = [];
     updateStats();
     initGrid();
 }
@@ -59,6 +64,19 @@ function sizeChange(){
     initGrid();
 }
 
+function toggleGraph(checked){
+    var statsField = document.getElementById("statistiques");
+    var graph = document.getElementById('graph');
+    if(checked){
+        statsField.style.display = 'none';        
+        graph.style.display = 'block';
+
+    } else {
+        statsField.style.display = 'block';
+        graph.style.display = 'none';
+    }
+}
+
 /**  Liste des formes affichage  */
 
 var listFormsModal = document.getElementById("modal_forms");
@@ -68,7 +86,6 @@ var btnClose = document.getElementById("close_list");
 btnDisplay.onclick = function() {
     //En local (sans serveur web): les navigateurs ont une sécurité pour ne pas pouvoir lire des fichiers privés donc impossible de lire les fichiers xml
     if(window.location.protocol === "file:"){
-        console.log("Non.")
         return
     }
     if(document.getElementById("img_bouge") == null){

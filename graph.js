@@ -1,5 +1,6 @@
+var statsGraph;
 var ctxGraph = document.getElementById('graph').getContext('2d');
-var dataValues = [0,1,2,3,4,2,6,8,9,1];
+var dataValues = [];
 var dataIndices;
 updateIndices();
 
@@ -7,15 +8,18 @@ var config = {
     type: 'line',
     data: {
         datasets: [{
-            label: "Statistiques nb cellules vivantes/nb itérations",
-            data: dataValues
+            label: "Nombre de cellules vivantes",
+            data: dataValues,
+            lineColor: "red",
+            fill:false,
+            borderColor: "rgb(75, 192, 192)",
+            lineTension: 0.1
         }],
-        labels: dataIndices
+        labels: dataIndices,
+
     },
     options: {
-        tooltips: {
-            enabled: false
-        },
+        responsive: false,
         scales: {
             yAxes: [{
                 stacked: true
@@ -23,14 +27,22 @@ var config = {
         }
     }
 }
-drawGraph(dataValues)
+drawGraph(dataValues);
 function drawGraph(listeNbCellules){
     dataValues=listeNbCellules;
-    var graph = new Chart(ctxGraph, config);
+    statsGraph = new Chart(ctxGraph, config);
 }
 
 function updateIndices(){
     dataIndices = Array(dataValues.length);
     let i=0;
     while(i<dataValues.length) dataIndices[i++]=i;
+}
+
+function updateData(data){
+    dataValues = data;
+    updateIndices();
+    statsGraph.data.datasets[0].data = dataValues;
+    statsGraph.data.labels = dataIndices;
+    statsGraph.update();
 }
