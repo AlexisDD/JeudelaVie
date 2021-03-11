@@ -19,7 +19,7 @@
     <div class="game-container">
         <canvas id="grille">Votre navigateur n'est pas compatible avec la technologie utilisée.</canvas>
 
-        <div id="data-container">
+        <div id="data-container">            
             <canvas id="graph" width="600" height="300" style="display:none;"></canvas>
             <fieldset id="statistiques">
                 <legend>Statistiques</legend>
@@ -50,10 +50,15 @@
 
                 <label for="taux_remplissage">Taux de remplissage (uniquement en mode aléatoire):</label> <br>
                 <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value+'%'">
+                
                 <output id="taux_remplissage_output">30%</output> <br>
 
-                <label for="display_graph">Afficher le graphique des statistiques :</label> <br>
-                <input type="checkbox" id="display_stats" onchange="toggleGraph(this.checked);">
+                <label for="display_stats">Afficher le graphique des statistiques :</label> <br>
+                <input type="checkbox" id="display_stats" onchange="toggleGraph(this.checked);"><br>
+
+                <label for="mode_grille">Grille fermée (côtés ne se rejoignent pas) :</label> <br>
+                <input type="checkbox" id="mode_grille" onchange="gridMode=this.checked;">
+
             </fieldset>
             <fieldset id="specific_forms_parent">
                 <legend>Formes spécifiques</legend>
@@ -79,6 +84,7 @@
     </div>    
     <script type="text/javascript" src="listener.js"> </script>
     <script type="text/javascript" src="class.js"> </script>
+    <script type="text/javascript" src="formes.js"> </script>
     <script type="text/javascript" src="game.js"> </script>
     <script type="text/javascript" src="graph.js"> </script>
 </body>
