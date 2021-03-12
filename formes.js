@@ -100,7 +100,7 @@ function fillFormsList(){
     
     for(const forme of formsList){
         var row = document.createElement("tr");
-        row.addEventListener("click", choixForme);
+        row.setAttribute("onclick", "choixForme(this)");
 
         var cellPreview = document.createElement("td");
         var name=forme.getElementsByTagName("name")[0].innerHTML;
@@ -129,10 +129,9 @@ function fillFormsList(){
 /**
  * Lors d'un clic sur une forme de la liste des formes, séléctionne la forme et affiche 
  * sur la grille une prévisualisation temporaire de cette forme.
- * @param {event} event - Informations sur la forme séléctionnée
+ * @param {object} container - Informations sur la forme séléctionnée
  */
-function choixForme(event){
-    var container = event.target.parentNode;
+function choixForme(container){
     name=container.getElementsByTagName("td")[1].innerHTML;
     old_name=name;
     name = name.replace(regAccentA, 'a');
@@ -200,12 +199,12 @@ function choixForme(event){
 document.onmousemove = function (event){
     if(document.getElementById("img_bouge") == null)
         return;
-    var x = event.clientX;
-    var y = event.clientY;     
-    var left_canvas= c.getBoundingClientRect().left;
-    var top_canvas = c.getBoundingClientRect().top;
-    var width = c.width;
-    var height = c.height;
+    x = event.clientX;
+    y = event.clientY;     
+    left_canvas= c.getBoundingClientRect().left;
+    top_canvas = c.getBoundingClientRect().top;
+    width = c.width;
+    height = c.height;
     if (x > left_canvas && x < (width+left_canvas) && y > top_canvas && y < (height+top_canvas)){           
         var img_bouge=document.getElementById("img_bouge");
         if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){
@@ -231,7 +230,6 @@ document.oncontextmenu = function (){
  */
 document.onkeydown = function(event){
     if(document.getElementById("img_bouge") != null){
-        console.log(event.key)
         var key = event.key;
         if (key == "Escape" ||  key =="Backspace" || key =="Delete")
             div_dynamique.removeChild(document.getElementById("img_bouge"));
