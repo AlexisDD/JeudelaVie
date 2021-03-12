@@ -23,7 +23,7 @@ var ctx = c.getContext("2d");
 var grid = new Array(gridLength);
 
 calculateCanvasSize();
-initGrid();
+initGrid(false);
 
 /**
  * Ecoute les clics sur la grille et modifie le statut de la cellule cliquée
@@ -74,17 +74,24 @@ function calculateCanvasSize(){
 /**
  * Initialise la grille du jeu, et dessine toutes les cellules (mortes pour l'instant)
  */
-function initGrid(){    
+function initGrid(keepCells){    
     cellulesParIteration = [];
     ctx.beginPath();
     ctx.lineWidth = "0.2";
+    var newGrid = [];
     for (var x = 0; x < gridLength; x += 1){        
-        grid[x] = new Array(gridHeight); 
+        newGrid[x] = new Array(gridHeight); 
         for (var y = 0; y < gridHeight; y += 1){
-            ctx.rect(x * cellSize, y*cellSize, cellSize, cellSize);            
-            grid[x][y]=new Cellule(x,y,0);
+            ctx.rect(x * cellSize, y*cellSize, cellSize, cellSize);   
+            if(keepCells && grid[x] && grid[x][y]){
+                newGrid[x][y] = new Cellule(x,y,0);
+                newGrid[x][y].statut = grid[x][y].statut;
+            } else {
+                newGrid[x][y]= new Cellule(x,y,0);
+            }
         }
     }
+    grid = newGrid;
     ctx.stroke();
  }
 

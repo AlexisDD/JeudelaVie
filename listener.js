@@ -57,7 +57,7 @@ function clearGrid(){
     nbCellulesVivantes = 0;
     cellulesParIteration = [];
     updateStats();
-    initGrid();
+    initGrid(false);
 }
 
 /**
@@ -83,7 +83,7 @@ function sizeChange(){
     height = largeurInput.value;
     cellSize = parseInt(tailleCelluleInput.value);
     calculateCanvasSize();
-    initGrid();
+    initGrid(true);
 }
 
 /**

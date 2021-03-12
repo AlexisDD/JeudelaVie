@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <formes>
     <forme> 
-        <name>Forme 1</name>
+        <name>Le chromosome</name>
         <min>
             <width>11</width>
             <height>3</height>
@@ -128,7 +128,7 @@
     </forme>
 
     <forme> 
-        <name>Forme 2</name>
+        <name>Pentamino</name>
         <min>
             <width>3</width>
             <height>3</height>
