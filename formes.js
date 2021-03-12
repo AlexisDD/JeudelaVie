@@ -9,7 +9,11 @@ var regAccentE = new RegExp('[éèêë]', 'gi');
 
 loadLetters();
 
-function display_img_bouge(event){
+/**
+ * Fonction appelée lors d'un clic sur la grille quand une forme est en train d'être placée
+ * @param {event} event objet "event" contenant les coordonnées du clic et d'autres informations
+ */
+function displayImgBouge(event){
     x = event.clientX;
     y = event.clientY;    
     if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){   
@@ -24,6 +28,15 @@ function display_img_bouge(event){
     }   
 }
 
+/**
+ * Récupère le contenu d'un fichier XML présent de façon asynchrone et exécute la fonction
+ * donnée en paramètre en donnant le contenu du fichier.
+ * 
+ * Attention : cette méthode ne fonctionne que sur un serveur web pour des raisons de sécurité des navigateurs.
+ * 
+ * @param {string} file - nom du fichier XML à ouvrir (ici un fichier sur le serveur web local)
+ * @param {Function} callback - fonction exécutée lorsque le contenu du fichier a été récupéré
+ */
 function loadXML(file, callback){
     var xhr = new XMLHttpRequest();
     xhr.open('GET', file, true);
@@ -34,6 +47,10 @@ function loadXML(file, callback){
     xhr.send(null);
 }
 
+/**
+ * Fonction qui récupère un tableau de toutes les formes spécifiques du jeu de la vie 
+ * à partir du fichier formes.xml
+ */
 function loadForms(){
     if(formsList === undefined){
         loadXML('formes/formes.xml', function () {
@@ -43,6 +60,10 @@ function loadForms(){
     }
 }
 
+/**
+ * Fonction qui récupère un tableau de tout les caractères affichables dans la grille
+ * à partir du fichier lettres.xml
+ */
 function loadLetters(){
     if(lettersList === undefined){
         loadXML('formes/lettres.xml', function () {
@@ -51,6 +72,10 @@ function loadLetters(){
     }
 }
 
+/**
+ * Crée dynamiquement un tableau (élément HTML) à partir de la liste des formes récupérées
+ * et l'affiche à l'utilisateur.
+ */
 function fillFormsList(){    
     var parent = document.getElementById("forms_content");
     if(document.getElementById("forms_table") != null)
@@ -75,13 +100,13 @@ function fillFormsList(){
     
     for(const forme of formsList){
         var row = document.createElement("tr");
-        row.setAttribute("onclick", "choix_forme(this)");
+        row.addEventListener("click", choixForme);
 
         var cellPreview = document.createElement("td");
         var name=forme.getElementsByTagName("name")[0].innerHTML;
 
         old_name=name;
-        name = name.replace(regAccentA, 'a'); // problème avec le serveur qui n'accecpte pas les accents
+        name = name.replace(regAccentA, 'a'); // problème avec le serveur qui n'accepte pas les accents
         name = name.replace(regAccentE, 'e');
         
         var img = document.createElement("img");
@@ -101,13 +126,17 @@ function fillFormsList(){
     parent.appendChild(table);
 }
 
-function choix_forme(container){
+/**
+ * Lors d'un clic sur une forme de la liste des formes, séléctionne la forme et affiche 
+ * sur la grille une prévisualisation temporaire de cette forme.
+ * @param {event} event - Informations sur la forme séléctionnée
+ */
+function choixForme(event){
+    var container = event.target.parentNode;
     name=container.getElementsByTagName("td")[1].innerHTML;
     old_name=name;
     name = name.replace(regAccentA, 'a');
     name = name.replace(regAccentE, 'e');
-    
-
 
     // Vérification de la taille minimale de la grille
     forme = formsList.find(forme => forme.getElementsByTagName("name")[0].innerHTML == old_name);
@@ -165,40 +194,55 @@ function choix_forme(container){
       
 }
 
-
-document.onmousemove = function (event){       
-    x = event.clientX;
-    y = event.clientY;     
-    left_canvas= c.getBoundingClientRect().left;
-    top_canvas = c.getBoundingClientRect().top;
-    width = c.width;
-    height = c.height;
+/**
+ * Quand une forme est séléctionnée, on écoute les mouvements de la souris pour déplacer la prévisualisation
+ */
+document.onmousemove = function (event){
+    if(document.getElementById("img_bouge") == null)
+        return;
+    var x = event.clientX;
+    var y = event.clientY;     
+    var left_canvas= c.getBoundingClientRect().left;
+    var top_canvas = c.getBoundingClientRect().top;
+    var width = c.width;
+    var height = c.height;
     if (x > left_canvas && x < (width+left_canvas) && y > top_canvas && y < (height+top_canvas)){           
-        if(document.getElementById("img_bouge") != null){
-            img_bouge=document.getElementById("img_bouge");
-            if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){
-                img_bouge.style.left =  (x + 1) + 'px';
-                img_bouge.style.top  =  (y + 1) + 'px';
-            }
+        var img_bouge=document.getElementById("img_bouge");
+        if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){
+            img_bouge.style.left =  (x + 1) + 'px';
+            img_bouge.style.top  =  (y + 1) + 'px';
         }
     }
 }
 
-document.oncontextmenu = function (){          // à chaque clic droit 
+/**
+ * Quand une forme est séléctionnée, on écoute les clics droits pour supprimer la prévisualisation (annuler la forme)
+ */
+document.oncontextmenu = function (){
     if(document.getElementById("img_bouge") != null){
         div_dynamique.removeChild(document.getElementById("img_bouge"));
         return false;
     }
 }
 
+/**
+ * Quand une forme est séléctionnée, on écoute les appuis sur les touches Espace, Retour arrière et Suppr
+ * pour annuler la pose de la forme et supprimer la prévisualisation.
+ */
 document.onkeydown = function(event){
     if(document.getElementById("img_bouge") != null){
-        keynum = event.which;
-        if (keynum == 8 ||  keynum ==27 || keynum ==46 || keynum ==110) // espace, backspace, del, del (numpad) 
+        console.log(event.key)
+        var key = event.key;
+        if (key == "Escape" ||  key =="Backspace" || key =="Delete")
             div_dynamique.removeChild(document.getElementById("img_bouge"));
     }
 }
 
+/**
+ * Affiche dans la grille la chaîne de caractères demandée, les caractères supportés sont ceux de la table ASCII
+ * @param {Array} formsToDisplay - Liste contenant les formes/patterns de chacun des caractères à afficher 
+ * pour reproduire un texte dans l'ordre.
+ */
 function displayAscii(formsToDisplay){
     var x = 0;
     var line = 0;
@@ -231,6 +275,12 @@ function displayAscii(formsToDisplay){
     updateStats();
 }
 
+/**
+ * Affiche une forme spécifique du jeu de la vie dans la grille.
+ * @param {object} forme - La balise XML contenant toutes les informations sur la forme à afficher (pattern, nom, ..)
+ * @param {number} x - Coordonnée x
+ * @param {number} y - Coordonnée y
+ */
 function displayForm(forme, x, y){
     var x_depart = x;
     var pattern = forme.getElementsByTagName("pattern")[0].innerHTML;

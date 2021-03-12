@@ -10,6 +10,11 @@ var longueur_output = document.getElementById("longueur_output");
 var largeur_output = document.getElementById("largeur_output");
 var taille_cellule_output = document.getElementById("taille_cellule_output");
 
+/**
+ * Met en pause ou redémarre le jeu de la vie.
+ * Cette fonction est appelée à chaque fois qu'une pause est demandée par l'utilisateur ou lorsque
+ * les conditions d'arrêt sont réunies.
+ */
 function playPause(){
     isActive = !isActive
     if(isActive){
@@ -25,16 +30,26 @@ function playPause(){
     }
 }
 
+/**
+ * Remplit aléatoirement la grille en fonction du taux de remplissage donné
+ */
 function random(){    
     randomFill(parseInt(tauxRemplissage.value)/100);
 }
 
+/**
+ * Change la vitesse des itérations
+ * @param {object} input - l'objet input HTML contenant la valeur de vitesse
+ */
 function inputVitesse(input){
     vitesse_output.value = input.value;
     delay = calculateDelay(input.value);
     updateStats();
 }
 
+/**
+ * Efface le contenu de la grille
+ */
 function clearGrid(){
     if(isActive)
         playPause()
@@ -45,6 +60,9 @@ function clearGrid(){
     initGrid();
 }
 
+/**
+ * Met à jour les statistiques à chaque itération
+ */
 function updateStats(){
     iterationsOutput.value = nbIterations;
     cellulesVivantesOutput.value = nbCellulesVivantes;
@@ -57,6 +75,9 @@ function updateStats(){
         tempsIterationOutput.value = delaySecond + " secondes";
 }
 
+/**
+ * Réinitialise la grille et change sa taille sur demande de l'utilisateur
+ */
 function sizeChange(){
     width = longueurInput.value;
     height = largeurInput.value;
@@ -65,6 +86,10 @@ function sizeChange(){
     initGrid();
 }
 
+/**
+ * Affiche ou non le graphe des statistiques
+ * @param {boolean} checked - true si la case est cochée, false sinon
+ */
 function toggleGraph(checked){
     var statsField = document.getElementById("statistiques");
     var graph = document.getElementById('graph');
@@ -105,6 +130,11 @@ window.onclick = function(event) {
         listFormsModal.style.display = "none";
 }
 
+/**
+ * À partir de la chaîne de caractère donnée, cette fonction vérifie si elle peut être affichée dans la grille puis
+ * récupère toutes les lettres (leurs patterns) nécéssaires et appelle une fonction qui affichera la résultat dans la grille.
+ * @param {string} chain - Chaîne de caractère à afficher
+ */
 function insertCharacters(chain){
     var parent = document.getElementById("specific_forms_parent");
     if(document.getElementById("result_form") != null)
@@ -118,12 +148,10 @@ function insertCharacters(chain){
     if(match){
         p.append("L'expression donnée a été insérée dans la grille.");
         var chainLetters = [];
-        console.log(lettersList);
         for (let i = 0; i < chain.length; i++) {
             var code = chain.charCodeAt(i);
             chainLetters.push(lettersList.find(letter => letter.getElementsByTagName("name")[0].innerHTML == "chr"+code));
         }
-        console.log(chainLetters);
         displayAscii(chainLetters);
     } else {
         p.append("L'expression donnée ne peut pas être insérée dans la grille.");

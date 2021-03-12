@@ -34,7 +34,7 @@ c.addEventListener('click', function(event) {
         clearTimeout(timer);
     }        
     if(document.getElementById("img_bouge") != null){ // clic pour afficher une image
-        display_img_bouge(event);
+        displayImgBouge(event);
     } else{ // sinon clic pour case de la grille
         ajoutManuel(event);
     }
@@ -120,8 +120,8 @@ function nbCellulesAutour(x,y){
     for (let posX = x-1; posX < x+2; posX++) {
         for (let posY = y-1; posY < y+2; posY++){
             if (!(posX == x && posY == y)){
-                posX1 = posX;
-                posY1 = posY;
+                var posX1 = posX;
+                var posY1 = posY;
                 if (gridMode){
                     if (posX < 0 || posY < 0 || posX>gridLength-1 || posY>gridHeight-1)
                         posX1=null;
@@ -133,9 +133,9 @@ function nbCellulesAutour(x,y){
                     if (posX>gridLength-1)
                         posX1 = 0;
                     if (posY>gridHeight-1)
-                        posY1 = 0;       
+                        posY1 = 0;
                 }
-                if (posX1!=null){
+                if (posX1 != null){
                     if (grid[posX1][posY1].statut == 1)
                         nbVivantProche += 1
                 }
@@ -218,6 +218,12 @@ function calculateDelay(temps){
     }
 }
 
+/**
+ * Compare le contenu de 2 tableaux (ces tableaux peuvent contenir d'autres tableaux)
+ * @param {Array} a1
+ * @param {Array} a2 
+ * @return {boolean} - true si les tableaux sont les mêmes, false sinon 
+ */
 function arraysEqual(a1, a2) {
     if (a1 == null || a2 == null || (a1.length != a2.length))
         return false;
