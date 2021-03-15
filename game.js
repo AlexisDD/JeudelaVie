@@ -83,12 +83,10 @@ function initGrid(keepCells){
         newGrid[x] = new Array(gridHeight); 
         for (var y = 0; y < gridHeight; y += 1){
             ctx.rect(x * cellSize, y*cellSize, cellSize, cellSize);   
-            if(keepCells && grid[x] && grid[x][y]){
-                newGrid[x][y] = new Cellule(x,y,0);
-                newGrid[x][y].statut = grid[x][y].statut;
-            } else {
+            if(keepCells && grid[x] && grid[x][y])
+                newGrid[x][y] = new Cellule(x,y,grid[x][y].statut);
+            else 
                 newGrid[x][y]= new Cellule(x,y,0);
-            }
         }
     }
     grid = newGrid;
