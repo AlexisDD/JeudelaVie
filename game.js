@@ -22,13 +22,17 @@ var statutPrecedent;
 var ctx = c.getContext("2d");
 var grid = new Array(gridLength);
 
+var mouse_down=false;
+var lastx = -1;
+var lasty = -1;
+
 calculateCanvasSize();
 initGrid(false);
 
 /**
  * Ecoute les clics sur la grille et modifie le statut de la cellule cliquée
  */
-c.addEventListener('click', function(event) {
+c.addEventListener('mousedown', function(event) {
     if (isActive){
         playPause();
         clearTimeout(timer);
@@ -36,15 +40,31 @@ c.addEventListener('click', function(event) {
     if(document.getElementById("img_bouge") != null){ // clic pour afficher une image
         displayImgBouge(event);
     } else{ // sinon clic pour case de la grille
+        mouse_down=true;
         ajoutManuel(event);
     }
 }, false);
+
+c.addEventListener('mousemove', function(event) {
+    if (mouse_down==true)
+        ajoutManuel(event,"hold");
+}, false);
+
+c.addEventListener('mouseup', function(event) {
+        mouse_down = false;
+}, false);
+
 
 /**
  * Modifie le statut de la cellule cliquée. Si elle était morte, elle devient vivante, ...
  * @param {event} event objet "event" contenant les coordonnées du clic et d'autres informations
  */
-function ajoutManuel(event){
+function ajoutManuel(event,mode=""){
+    if (mode == "hold"){
+        if (Math.floor(event.offsetX / cellSize) == lastx && Math.floor(event.offsetY / cellSize) ==lasty){
+            return;
+        }
+    }
     var x = Math.floor(event.offsetX / cellSize);
     var y = Math.floor(event.offsetY / cellSize);
     const cellule = grid[x][y];
@@ -56,6 +76,8 @@ function ajoutManuel(event){
         nbCellulesVivantes++;
     }
     updateStats();
+    lastx = x;
+    lasty = y;
 }
 
 function calculateCanvasSize(){

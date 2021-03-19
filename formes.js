@@ -194,18 +194,17 @@ function choixForme(container){
 }
 
 /**
- * Quand une forme est séléctionnée, on écoute les mouvements de la souris pour déplacer la prévisualisation
+ * Quand une forme est séléctionnée, on écoute les mouvements de la souris / du doigt pour déplacer la prévisualisation
  */
-document.onmousemove = function (event){
+
+function touch_and_mouse(x,y){
     if(document.getElementById("img_bouge") == null)
-        return;
-    x = event.clientX;
-    y = event.clientY;     
+        return;    
     left_canvas= c.getBoundingClientRect().left;
     top_canvas = c.getBoundingClientRect().top;
     width = c.width;
     height = c.height;
-    if (x > left_canvas && x < (width+left_canvas) && y > top_canvas && y < (height+top_canvas)){           
+    if (x > left_canvas && x < (width+left_canvas) && y > top_canvas && y < (height+top_canvas)){ 
         var img_bouge=document.getElementById("img_bouge");
         if (x < (width+left_canvas-img_bouge.width) &&  y < (height+top_canvas-img_bouge.height)){
             img_bouge.style.left =  (x + 1) + 'px';
@@ -213,6 +212,15 @@ document.onmousemove = function (event){
         }
     }
 }
+
+document.onmousemove = function (event){
+    touch_and_mouse(event.clientX,event.clientY);
+}
+
+document.ontouchmove = function (event){
+    touch_and_mouse(event.touches[0].clientX,event.touches[0].clientY);
+}
+
 
 /**
  * Quand une forme est séléctionnée, on écoute les clics droits pour supprimer la prévisualisation (annuler la forme)
