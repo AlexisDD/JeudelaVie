@@ -87,6 +87,20 @@ function sizeChange(){
 }
 
 /**
+ * Vérifie si la valeur de l'objet input donné est bien comprise entre son min et son max, sinon
+ * la corrige
+ * @param {HTMLObjectElement} element 
+ */
+function checkInputValue(element){
+    const value = parseInt(element.value);
+    if(value < element.min){
+        element.value = element.min;
+    } else if(value > element.max) {
+        element.value = element.max;
+    }
+}
+
+/**
  * Affiche ou non le graphe des statistiques
  * @param {boolean} checked - true si la case est cochée, false sinon
  */
