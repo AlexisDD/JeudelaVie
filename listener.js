@@ -90,13 +90,29 @@ function sizeChange(){
  * Vérifie si la valeur de l'objet input donné est bien comprise entre son min et son max, sinon
  * la corrige
  * @param {HTMLObjectElement} element 
+ * @param {HTMLObjectElement} outputElement - l'élément "slider" dont la valeur va être modifiée en conséquence
  */
-function checkInputValue(element){
+function checkInputValue(element, outputElement){
     const value = parseInt(element.value);
     if(value < element.min){
-        element.value = element.min;
+        outputElement.value = element.min;
     } else if(value > element.max) {
         element.value = element.max;
+    }
+ 
+    outputElement.value = element.value;
+    sizeChange();
+}
+
+/**
+ * Quand un champ de texte de type nombre est déselectionné, on vérifie si sa valeur est plus grande que son min.
+ * @param {HTMLObjectElement} element 
+ */
+function checkMinValue(element){
+    const value = parseInt(element.value);
+    console.log("min:", element.min)
+    if(value < element.min){
+        element.value = element.min;
     }
 }
 
