@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"> </script>
     <title>Jeu de la vie</title>
 </head>
 <body>
@@ -34,15 +34,15 @@
                 <legend>Paramètres</legend>                
                 <label for="longueur_grille">Longueur de la grille :</label> <br>
                 <input type="range" id="longueur_grille" value="600" min="100" max="1000" onchange="sizeChange()" oninput="longueur_output.value = this.value">
-                <input id="longueur_output" type="number" min="100" max="1000" value="600" oninput="checkInputValue(this, longueur_grille);" onfocusout="checkMinValue(this)"></input> <br>
+                <input id="longueur_output" type="number" min="100" max="1000" value="600" oninput="checkInputValue(this, longueur_grille);" onfocusout="checkMinValue(this)"> <br>
 
                 <label for="largeur_grille">Largeur de la grille :</label> <br>
                 <input type="range" id="largeur_grille" value="600" min="100" max="1000" onchange="sizeChange()" oninput="largeur_output.value = this.value">
-                <input id="largeur_output" type="number" min="100" max="1000" value="600" oninput="checkInputValue(this, largeur_grille);" onfocusout="checkMinValue(this)"></input> <br>
+                <input id="largeur_output" type="number" min="100" max="1000" value="600" oninput="checkInputValue(this, largeur_grille);" onfocusout="checkMinValue(this)"> <br>
 
                 <label for="taille_cellule">Taille des cellules :</label> <br>
                 <input type="range" id="taille_cellule" value="20" min="5" max="40" onchange="sizeChange()" oninput="taille_cellule_output.value = this.value">
-                <input id="taille_cellule_output" type="number" min="5" max="40" value="20" oninput="checkInputValue(this, taille_cellule);" onfocusout="checkMinValue(this)"></input> <br>
+                <input id="taille_cellule_output" type="number" min="5" max="40" value="20" oninput="checkInputValue(this, taille_cellule);" onfocusout="checkMinValue(this)"> <br>
 
                 <label for="vitesse">Vitesse :</label> <br>
                 <input type="range" id="vitesse" value="1" min="0" max="2" step="0.1" oninput="inputVitesse(this)">
@@ -50,7 +50,7 @@
 
                 <label for="taux_remplissage">Taux de remplissage (uniquement en mode aléatoire):</label> <br>
                 <input type="range" id="taux_remplissage" value="30" min="0" max="100" oninput="taux_remplissage_output.value = this.value">
-                <input id="taux_remplissage_output" type="number" value="30" min="0" max="100" oninput="checkInputValue(this, taux_remplissage);" onfocusout="checkMinValue(this)" > %</input> <br>
+                <input id="taux_remplissage_output" type="number" value="30" min="0" max="100" oninput="checkInputValue(this, taux_remplissage);" onfocusout="checkMinValue(this)" > % <br>
 
                 <label for="display_stats">Afficher le graphique des statistiques :</label>
                 <input type="checkbox" id="display_stats" onchange="toggleGraph(this.checked);"><br>
@@ -84,10 +84,10 @@
     <footer>
         <p>Réalisé dans le cadre d'un projet de 2<sup>ème</sup>année de PeiP à Polytech Tours par Alexis CHATELAIN et Alexis DESAINT-DENIS</p>
     </footer>
-    <script type="text/javascript">if(window.navigator.userAgent.indexOf('MSIE')>0 || window.navigator.userAgent.indexOf('Trident')>0){ document.location='IE_incompatible.html';} </script>
-    <script type="text/javascript" src="listener.js"> </script>
-    <script type="text/javascript" src="class.js"> </script>
-    <script type="text/javascript" src="formes.js"> </script>
-    <script type="text/javascript" src="game.js"> </script>
-    <script type="text/javascript" src="graph.js"> </script>
+    <script>if(window.navigator.userAgent.indexOf('MSIE')>0 || window.navigator.userAgent.indexOf('Trident')>0){ document.location='IE_incompatible.html';} </script>
+    <script src="listener.js"> </script>
+    <script src="class.js"> </script>
+    <script src="formes.js"> </script>
+    <script src="game.js"> </script>
+    <script src="graph.js"> </script>
 </body>
